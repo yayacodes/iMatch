@@ -1,0 +1,31 @@
+{
+  "name": "cs-546-final-project",
+  "version": "1.0.0",
+  "description": "CS-546 Final Project - iMatch",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed": "node ./tasks/seed.js",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yayacodes/iMatch.git"
+  },
+  "author": "Group YPC: Yehia Awad, Hien Bui, Jonathan Tolentino, Peter Tu, Clinton Wojick",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yayacodes/iMatch/issues"
+  },
+  "homepage": "https://github.com/yayacodes/iMatch#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.7",
+    "cookie-parser": "^1.4.4",
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "express-session": "^1.17.0",
+    "handlebars": "^4.5.3",
+    "mongodb": "^3.3.4",
+    "uuid": "^3.3.3"
+  }
+}
