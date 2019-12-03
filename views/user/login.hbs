@@ -1,0 +1,17 @@
+<main>
+        <h1>Login!</h1>
+        <!-- Simple form that will send a POST request to /dashboard page if user successfully logs in-->
+        <form action="/dashboard" method="post" id="login-form">
+            <label for="username"> UserName:
+                <input id="username" type="text" name="username" />
+            </label>
+            <label for="password"> Password:
+                <input id="password" type ="text" name="password" />
+            </label>
+            <label for="login-button">
+                <input id = "login-button" type ="submit" value ="Login" />
+            </label>
+        </form>
+        <p id = "register-link"> Don't have an account? <a href = "/register"> Click Here </a>to Register</p>
+        <p id ="bad-login">{{error}}</p>
+</main>

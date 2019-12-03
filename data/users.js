@@ -8,7 +8,7 @@ const saltRounds = 16;
 module.exports = {
   // **** General functions ****
   // create new user when someone registers
-  async create(username, password, firstname, lastname, email) {
+  async create(username, password, firstname, lastname, email, phone, zipcode) {
     // error check
 
     // get users collection
@@ -30,8 +30,8 @@ module.exports = {
         firstname: firstname,
         lastname: lastname,
         email: email,
-        phone: "",
-        zipcode: "",
+        phone: phone,
+        zipcode: zipcode,
         title: "student",
         course: [],
         availability: [],

@@ -1,0 +1,37 @@
+<main>
+        <h1>Register!</h1>
+        <!-- Simple form that will send a POST request to /dashboard page if user successfully logs in-->
+        <form action="/dashboard" method="post" id="register-form">
+            <label for="username"> UserName:
+                <input id="username" type="text" name="username" />
+            </label>
+            <br>
+            <label for="password"> Password:
+                <input id="password" type ="text" name="password" />
+            </label>
+            <br>
+            <label for="firstname"> First Name:
+                <input id="firstname" type="text" name="firstname" />
+            </label>
+            <label for="lastname"> Last Name:
+                <input id="lastname" type="text" name="lastname" />
+            </label>
+            <br>
+            <label for="email"> Email:
+                <input id="email" type="text" name="email" />
+            </label>
+            <br>
+            <label for="phone"> Phone Number:
+                <input id="phone" type="number" name="phone" />
+            </label>
+
+            <label for="zipcode"> ZipCode:
+                <input id="zipcode" type="number" name="zipcode" />
+            </label>
+            <br>
+            <label for="register-button">
+                <input id = "register-button" type ="submit" value ="Register" />
+            </label>
+        </form>
+        <p id ="error">{{error}}</p>
+</main>
