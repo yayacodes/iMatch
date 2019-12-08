@@ -78,7 +78,9 @@ const constructorMethod = app => {
   app.post('/signup', async (req, res) => {
     let requestData = req.body;
     try {
-      let addUser = await userMethods.create(requestData.username, requestData.password, requestData.firstname, requestData.lastname, requestData.email, requestData.phone, requestData.zipcode);
+      
+      let addUser = await userMethods.create(requestData.username, requestData.password, requestData.firstname, requestData.lastname, requestData.email, requestData.phone, requestData.zipcode, requestData.latitude, requestData.longitude);
+      
       if(addUser === true){
         res.redirect('/profile'); //upon successfull add, we redirect the user to their newly created profile.
       }
