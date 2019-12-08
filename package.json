@@ -26,6 +26,7 @@
     "express-session": "^1.17.0",
     "handlebars": "^4.5.3",
     "mongodb": "^3.3.4",
+    "prompt": "^1.0.0",
     "uuid": "^3.3.3"
   }
 }

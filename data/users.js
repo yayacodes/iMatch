@@ -8,8 +8,14 @@ const saltRounds = 16;
 module.exports = {
   // **** General functions ****
   // create new user when someone registers
-  async create(username, password, firstname, lastname, email, phone, zipcode) {
+  async create(username, password, firstname, lastname, email, phone, zipcode, latitude, longitude) {
     // error check
+
+    // Blank zip, latitude, or longitude
+    if(zipcode == '' || latitudfe == '' || longitude == '')
+    {
+      throw "Registration failed: Invalid zip code";
+    }
 
     // get users collection
     const usersCollection = await users();
@@ -32,6 +38,9 @@ module.exports = {
         email: email,
         phone: phone,
         zipcode: zipcode,
+        latitude: latitude,
+        longitude: longitude,
+        grouped: 'false',
         title: "student",
         course: [],
         availability: [],
@@ -67,6 +76,18 @@ module.exports = {
     if (!oneUser) throw `failed to find user with id: ${id}`;
 
     return oneUser;
+  },
+
+  // returns an array of users by zip code
+  async getUsersByZip(zipCode) {
+    if(!zipCode) throw 'zip code not specified';
+
+    const userCollection = await users();
+    const usersByZip = await userCollection.find({ zipcode: zipCode }).toArray();
+
+    if(!usersByZip) throw `failed to find user with zip: ${zipCode}`;
+
+    return usersByZip;
   },
 
   // remove user with the given id from database
