@@ -1,1 +1,8 @@
 node_modules/
+.DS_Store
+data/.DS_Store
+public/.DS_Store
+public/css/.DS_Store
+routes/.DS_Store
+tasks/.DS_Store
+views/.DS_Store

@@ -7,7 +7,7 @@ $(document).ready(function(){
 
 		let zipCode = form.zipcode.value;
 
-		if(zipCode.length <= 5 || zipCode == '')
+		if(zipCode.length < 5 || zipCode == '')
 		{
 			// Blank or invalid zip code
 			// Submit the form as-is, catch the error when trying to add the user in the db
