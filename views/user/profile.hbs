@@ -1,7 +1,11 @@
 <main>
 <div>
-  {{currenuser.username}}
-//need to display user information here 
+//need to display user information here
+ {{#each data}}
+  <ul>
+  	<li>{{this.firstname}}</li>
+	<li>{{this.lastname}}</li>
+ </ul>
 	<a href="/logout">Log Out</a>
 	<a href="/edit>Edit your Profile</a>
 </div>
