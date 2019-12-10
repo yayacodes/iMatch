@@ -95,7 +95,7 @@ const constructorMethod = app => {
 
   app.get('/profile', async (req, res) => {
     try {
-      res.render('/user/profile.hbs')
+      res.render('/user/profile.hbs', {data: profile})
     } catch (e) {
       res.sendStatus(404).json({ error: e });
     }
