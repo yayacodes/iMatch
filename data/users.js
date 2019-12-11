@@ -126,6 +126,29 @@ module.exports = {
 >>>>>>> Grouping Algorithm
   },
 
+  // returns an array of users by availability (day-of-the-week)
+  async getUsersByAvailability(day) {
+    if(!day) throw 'day not specified';
+
+    const usersCollection = await users();
+    const usersByAvailibility = await usersCollection.find({availability: {$elemMatch: {$eq: day }}}).toArray();
+
+    if(!usersByAvailibility) throw `failed to find users with availability ${day}`;
+
+    return usersByAvailibility;
+  },
+
+  // returns an array of users that have not been grouped
+  async getUngroupedUsers() {
+    const usersCollection = await users();
+    const ungroupedUsers = await usersCollection.find({grouped: 'false'}).toArray();
+
+    if(!ungroupedUsers){ ungroupedUsers = []; }
+
+    return ungroupedUsers;
+
+  },
+
   // remove user with the given id from database
   async remove(id) {
     if (!id) throw "id not specified";
@@ -313,5 +336,8 @@ module.exports = {
 
       return usersbyDayMap;
   } 
+
+  // **** Sorting functions ****
+  // 
 
 }
