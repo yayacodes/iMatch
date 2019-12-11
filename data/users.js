@@ -45,7 +45,8 @@ module.exports = {
         course: [],
         availability: [],
         meetings: []
-      }
+      },
+      validSessionIDs: []
     };
 
     const insertInfo = await usersCollection.insertOne(newUser);
@@ -89,7 +90,7 @@ module.exports = {
 
     return usersByZip;
   },
-
+  
   // remove user with the given id from database
   async remove(id) {
     if (!id) throw "id not specified";
@@ -130,7 +131,18 @@ module.exports = {
 
   // **** Security-related functions ****
   // verify username and password using bcrypt when logging in
-  async verifyUser(username, password) {
+  async verifyUser(userName, password) {
+    //search for user with username in db
+    const usersCollection = await users();
+    const oneUser = await usersCollection.findOne({ username: userName });
+    if (!oneUser) throw 'Failed to find user with that username';
+
+    //check if passwords are the same
+    let samePass = await bcrypt.compare(password, oneUser.hashedPassword);
+    if (samePass) {
+      req.session.loginStatus = true;
+      //update validSessionIDs array of user in the db
+    }
 
   },
 
