@@ -14,6 +14,7 @@ router.post('/', async (req, res) => {
     let requestData = req.body;
     console.log(requestData); //this is just for us to see obviously we shouldn't log userinfo.
     try {
+        //I'll create another function to call below instead of verifyUser because i think this is authorization rather than authentication (Hien)  
         let login = await userMethods.verifyUser(requestData.username, requestData.password, req.session.id);
 
         if (login === true) {
