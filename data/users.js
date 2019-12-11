@@ -285,9 +285,33 @@ module.exports = {
 
   async getUserBySessionId(sessionId) {
 
-  }
+  },
 
   // **** Sorting functions ****
-  // 
+  
+  // sorts any users who are not part of a group by day of the
+  // week availability
+  async sortStudentsBy() {
+
+      // Get all un-grouped users
+      const unGroupedUsers = await this.getUngroupedUsers();
+
+      const availibility = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+      let usersbyDayMap = {};
+
+      // Sort student users by availibility
+      for(i = 0; i < availibility.length; i++)
+      {
+          let usersByAvailability =  await this.getUsersByAvailability(availibility[i]);
+          usersbyDayMap[availibility] = usersByAvailability;
+      }
+
+      if(!usersbyDayMap || Object.keys(usersbyDayMap).length == 0) {
+        throw 'unable to sort users by availability';
+      }
+
+      return usersbyDayMap;
+  } 
 
 }
