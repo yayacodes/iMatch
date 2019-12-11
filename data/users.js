@@ -82,13 +82,14 @@ module.exports = {
   async getUsersByZip(zipCode) {
     if (!zipCode) throw 'zip code not specified';
 
-    const userCollection = await users();
-    const usersByZip = await userCollection.find({ zipcode: zipCode }).toArray();
+    const usersCollection = await users();
+    const usersByZip = await usersCollection.find({ zipcode: zipCode }).toArray();
 
     if (!usersByZip) throw `failed to find user with zip: ${zipCode}`;
 
     return usersByZip;
   },
+<<<<<<< 538d7c797f8e98043e504e3037d5ac9089dbdd73
   
   // return a user document with matching userName
   async getUserByUsername(userName) {
@@ -99,6 +100,30 @@ module.exports = {
     if (!oneUser) throw 'Failed to find user with that username';
     
     return oneUser;
+=======
+
+  // returns an array of users by availability (day-of-the-week)
+  async getUsersByAvailability(day) {
+    if(!day) throw 'day not specified';
+
+    const usersCollection = await users();
+    const usersByAvailibility = await usersCollection.find({availability: {$elemMatch: {$eq: day }}}).toArray();
+
+    if(!usersByAvailibility) throw `failed to find users with availability ${day}`;
+
+    return usersByAvailibility;
+  },
+
+  // returns an array of users that have not been grouped
+  async getUngroupedUsers() {
+    const usersCollection = await users();
+    const ungroupedUsers = await usersCollection.find({grouped: 'false'}).toArray();
+
+    if(!ungroupedUsers){ ungroupedUsers = []; }
+
+    return ungroupedUsers;
+
+>>>>>>> Grouping Algorithm
   },
 
   // remove user with the given id from database
@@ -261,5 +286,8 @@ module.exports = {
   async getUserBySessionId(sessionId) {
 
   }
+
+  // **** Sorting functions ****
+  // 
 
 }
