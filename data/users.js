@@ -12,8 +12,7 @@ module.exports = {
     // error check
 
     // Blank zip, latitude, or longitude
-    if(zipcode == '' || latitude == '' || longitude == '')
-    {
+    if (zipcode == '' || latitude == '' || longitude == '') {
       throw "Registration failed: Invalid zip code";
     }
 
@@ -81,16 +80,16 @@ module.exports = {
 
   // returns an array of users by zip code
   async getUsersByZip(zipCode) {
-    if(!zipCode) throw 'zip code not specified';
+    if (!zipCode) throw 'zip code not specified';
 
     const userCollection = await users();
     const usersByZip = await userCollection.find({ zipcode: zipCode }).toArray();
 
-    if(!usersByZip) throw `failed to find user with zip: ${zipCode}`;
+    if (!usersByZip) throw `failed to find user with zip: ${zipCode}`;
 
     return usersByZip;
   },
-  
+
   // remove user with the given id from database
   async remove(id) {
     if (!id) throw "id not specified";
@@ -140,7 +139,7 @@ module.exports = {
     //check if passwords are the same
     let samePass = await bcrypt.compare(password, oneUser.hashedPassword);
     if (samePass) {
-      req.session.loginStatus = true;
+      req.session.loginStatus = true; //you get an error here when you test the program
       //update validSessionIDs array of user in the db
     }
 
