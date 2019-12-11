@@ -39,7 +39,7 @@ const constructorMethod = app => {
     let requestData = req.body;
     console.log(requestData); //this is just for us to see obviously we shouldn't log userinfo.
     try {
-      let login = await userMethods.verifyUser(requestData.username, requestData.password);
+      let login = await userMethods.verifyUser(requestData.username, requestData.password, req.session.id);
 
       if (login === true) {
         console.log("User Is Authenticated");
