@@ -12,7 +12,7 @@ module.exports = {
     // error check
 
     // Blank zip, latitude, or longitude
-    if(zipcode == '' || latitudfe == '' || longitude == '')
+    if(zipcode == '' || latitude == '' || longitude == '')
     {
       throw "Registration failed: Invalid zip code";
     }

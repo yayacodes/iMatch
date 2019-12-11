@@ -104,6 +104,7 @@ const constructorMethod = app => {
 
   /* ****************** */
 
+  // This will return 404 error for all other invalid routes (URLs)
   app.get("*", (req, res) => {
     res.sendStatus(404);
   });

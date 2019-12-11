@@ -1,8 +1,7 @@
-<main>
-<div>
+<div class="profile-info">
 //need to display user information here
  {{#each data}}
- <h1>Logged in as {{this.username}}</h1>
+ <h2>Logged in as {{this.username}}</h2>
   <ul>
   	<li>{{this.firstname}}</li>
 	<li>{{this.lastname}}</li>
@@ -13,7 +12,6 @@
 	//need add courses, avaialbility and meetings
  </ul>
 	<a href="/logout">Log Out</a>
-	<a href="/edit>Edit your Profile</a>
+	<a href="/edit">Edit your Profile</a>
 {{/each}}
 </div>
-</main>
