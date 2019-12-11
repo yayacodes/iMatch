@@ -8,7 +8,7 @@ async function main() {
     
   const user1 = {
       username: "username1",
-      pasword: "password1",
+      password: "password1",
       firstname: "firstname1",
       lastname: "lastname1",
       email: "email1@gmail.com",
@@ -20,7 +20,7 @@ async function main() {
   
   const user2 = {
       username: "username2",
-      pasword: "password2",
+      password: "password2",
       firstname: "firstname2",
       lastname: "lastname2",
       email: "email2@gmail",
@@ -32,7 +32,7 @@ async function main() {
   
   const user3 = {
       username: "username1",
-      pasword: "password1",
+      password: "password1",
       firstname: "firstname1",
       lastname: "lastname1",
       email: "email3@gmail.com",
