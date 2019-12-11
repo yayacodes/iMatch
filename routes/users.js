@@ -54,8 +54,8 @@ router.put('/:id', async (req, res) => {
     return;
   }
   try {
-    const updatedUser = await userData.updateAnimal(req.params.id, userInfo.newFirstname, userInfo.newLastname, userInfo.newEmail); // finish adding parameters
-    res.json(updatedAnimal);
+    const updatedUser = await userData.updateUser(req.params.id, userInfo.newFirstname, userInfo.newLastname, userInfo.newEmail); // finish adding parameters
+    res.json(updatedUser);
   } catch (e) {
     res.sendStatus(500);
   }
