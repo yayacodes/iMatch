@@ -89,7 +89,6 @@ module.exports = {
 
     return usersByZip;
   },
-<<<<<<< 538d7c797f8e98043e504e3037d5ac9089dbdd73
   
   // return a user document with matching userName
   async getUserByUsername(userName) {
@@ -100,7 +99,7 @@ module.exports = {
     if (!oneUser) throw 'Failed to find user with that username';
     
     return oneUser;
-=======
+  },
 
   // returns an array of users by availability (day-of-the-week)
   async getUsersByAvailability(day) {
@@ -122,8 +121,6 @@ module.exports = {
     if(!ungroupedUsers){ ungroupedUsers = []; }
 
     return ungroupedUsers;
-
->>>>>>> Grouping Algorithm
   },
 
   // returns an array of users by availability (day-of-the-week)
@@ -336,8 +333,5 @@ module.exports = {
 
       return usersbyDayMap;
   } 
-
-  // **** Sorting functions ****
-  // 
 
 }
