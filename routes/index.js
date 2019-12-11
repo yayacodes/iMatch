@@ -5,8 +5,6 @@ const profileRoutes = require("./profile");
 const loginRoutes = require("./login");
 const signupRoutes = require("./signup");
 
-//just required this for testing purposes
-
 const constructorMethod = app => {
   app.use("/users", userRoutes);
   app.use("/dashboard", dashboardRoutes);
