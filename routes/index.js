@@ -42,6 +42,7 @@ const constructorMethod = app => {
       let login = await userMethods.verifyUser(requestData.username, requestData.password, req.session.id);
 
       if (login === true) {
+        req.session.loginStatus = true;
         console.log("User Is Authenticated");
         //update user authentication
 
