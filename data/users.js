@@ -153,7 +153,7 @@ module.exports = {
 
   },
 
-  async getUserById(sessionId) {
+  async getUserBySessionId(sessionId) {
 
   }
 
