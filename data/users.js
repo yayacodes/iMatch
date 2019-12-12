@@ -110,17 +110,60 @@ module.exports = {
 
   // update user profile info
   async updateUser(id, firstname, lastname, email, phone, zipcode) {
+    if (!id) throw "id not specified";
 
+    const usersCollection = await users();
+    const userQuery = await this.getUserById(id);
+    const updateQuery = {
+      $set:
+      {
+        "firstname": firstname,
+        "lastname": lastname,
+        "email": email,
+        "phone": phone,
+        "zipcode": zipcode
+      }
+    };
+
+    const updateInfo = await usersCollection.updateOne(userQuery, updateQuery);
+    if (updateInfo.modifiedCount === 0) throw `failed to update user with id: ${id}`;
+    else {
+      return "Successfully updated profile";
+    }
   },
 
   // adds a course to user, called via update schedule form
-  async addCourseToUser(userId, courseId) {
+  async addCourseToUser(id, courseId) {
+    if (!id) throw "id not specified";
 
+    const usersCollection = await users();
+    const userQuery = await this.getUserById(id);
+    const updatedQuery = {
+      $addToSet: { course: courseId }
+    };
+
+    const updateInfo = await usersCollection.updateOne(userQuery, updatedQuery);
+    if (updateInfo.modifiedCount === 0) throw `failed to update course to user with id: ${id}`;
+    else {
+      return "Successfully updated profile with new course";
+    }
   },
 
   // removes a course from user, called via update schedule form
-  async removeCourseFromUser(userId, courseId) {
+  async removeCourseFromUser(id, courseId) {
+    if (!id) throw "id not specified";
 
+    const usersCollection = await users();
+    const userQuery = await this.getUserById(id);
+    const removeQuery = {
+      $pull: { course: courseId }
+    };
+
+    const updateInfo = await usersCollection.updateOne(userQuery, removeQuery);
+    if (updateInfo.modifiedCount === 0) throw `failed to remove course to user with id: ${id}`;
+    else {
+      return "Successfully removed course from profile with id";
+    }
   },
 
   // add availability to user, called via update schedule form
