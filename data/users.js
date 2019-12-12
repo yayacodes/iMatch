@@ -113,18 +113,34 @@ module.exports = {
 
   },
 
-  // add a course to user
-  async addCourseToUser(userId, course) {
+  // adds a course to user, called via update schedule form
+  async addCourseToUser(userId, courseId) {
 
   },
 
-  // add availability to user
+  // removes a course from user, called via update schedule form
+  async removeCourseFromUser(userId, courseId) {
+
+  },
+
+  // add availability to user, called via update schedule form
   async addAvailabilityToUser(userId, availDay) {
 
   },
 
-  // add a meeting to user
+  // removes availability from user, called via update schedule form
+  async updateAvailability(userId, availDay) {
+
+  },
+
+  // adds a meeting to user, this will be called after algorithm matches a group
+  // and finds a common meeting time/place
   async addMeetingToUser(userId, meetingId, meetingTitle) {
+
+  },
+
+  // removes a meeting from user, this will be called after user removes a course
+  async removeMeetingFromUser(userId, meetingId) {
 
   },
 
