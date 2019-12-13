@@ -167,13 +167,37 @@ module.exports = {
   },
 
   // add availability to user, called via update schedule form
-  async addAvailabilityToUser(userId, availDay) {
+  async addAvailabilityToUser(id, availDay) {
+    if (!id) throw "id not specified";
 
+    const usersCollection = await users();
+    const userQuery = await this.getUserById(id);
+    const updatedQuery = {
+      $addToSet: { availability: availDay }
+    };
+
+    const updateInfo = await usersCollection.updateOne(userQuery, updatedQuery);
+    if (updateInfo.modifiedCount === 0) throw `failed to update availability for user with id: ${id}`;
+    else {
+      return "Successfully updated profile with new availability";
+    }
   },
 
   // removes availability from user, called via update schedule form
-  async updateAvailability(userId, availDay) {
+  async updateAvailability(id, availDay) {
+    if (!id) throw "id not specified";
 
+    const usersCollection = await users();
+    const userQuery = await this.getUserById(id);
+    const updatedQuery = {
+      $pull: { availability: availDay }
+    };
+
+    const updateInfo = await usersCollection.updateOne(userQuery, updatedQuery);
+    if (updateInfo.modifiedCount === 0) throw `failed to update availability for user with id: ${id}`;
+    else {
+      return "Successfully updated profile with new availability";
+    }
   },
 
   // adds a meeting to user, this will be called after algorithm matches a group
