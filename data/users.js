@@ -213,7 +213,7 @@ module.exports = {
 
   // **** Security-related functions ****
   // verify username and password using bcrypt when logging in
-  async verifyUser(userName, password) {
+  async verifyUser(userName, password,sessionID) {
     //search for user with username in db
     const usersCollection = await users();
     const oneUser = await usersCollection.findOne({ username: userName });
@@ -222,8 +222,21 @@ module.exports = {
     //check if passwords are the same
     let samePass = await bcrypt.compare(password, oneUser.hashedPassword);
     if (samePass) {
-      req.session.loginStatus = true; //you get an error here when you test the program
       //update validSessionIDs array of user in the db
+      let newValidSessionIDs = oneUser.validSessionIDs;
+      newValidSessionIDs.push(sessionID);
+      
+      let updatedUser = {
+        validSessionIDs: newValidSessionIDs
+      };
+      
+      const updatedInfo = await usersCollection.updateOne({username: userName}, {$set:updatedUser});
+      if (updatedInfo.modifiedCount === 0) {
+        throw "Could not add sessionID to user document"
+      };  
+      return true;
+    } else {
+      return false;
     }
 
   },
