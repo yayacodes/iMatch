@@ -89,6 +89,17 @@ module.exports = {
 
     return usersByZip;
   },
+  
+  // return a user document with matching userName
+  async getUserByUsername(userName) {
+    if (!userName) throw 'username not specified';
+    
+    const usersCollection = await users();
+    const oneUser = await usersCollection.findOne({ username: userName });
+    if (!oneUser) throw 'Failed to find user with that username';
+    
+    return oneUser;
+  },
 
   // remove user with the given id from database
   async remove(id) {
@@ -215,10 +226,8 @@ module.exports = {
   // verify username and password using bcrypt when logging in
   async verifyUser(userName, password,sessionID) {
     //search for user with username in db
-    const usersCollection = await users();
-    const oneUser = await usersCollection.findOne({ username: userName });
-    if (!oneUser) throw 'Failed to find user with that username';
-
+    const oneUser = await this.getUserByUsername(userName);
+    
     //check if passwords are the same
     let samePass = await bcrypt.compare(password, oneUser.hashedPassword);
     if (samePass) {
