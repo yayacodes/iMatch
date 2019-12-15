@@ -8,12 +8,17 @@ const saltRounds = 16;
 module.exports = {
   // **** General functions ****
   // create new user when someone registers
-  async create(username, password, firstname, lastname, email, phone, zipcode, latitude, longitude) {
+  async create(username, password, firstname, lastname, email, phone, zipcode, latitude, longitude, availability) {
     // error check
 
     // Blank zip, latitude, or longitude
     if (zipcode == '' || latitude == '' || longitude == '') {
       throw "Registration failed: Invalid zip code";
+    }
+
+    if(availability == null) 
+    {
+      availability = [];
     }
 
     // get users collection
@@ -42,7 +47,7 @@ module.exports = {
         grouped: 'false',
         title: "student",
         course: [],
-        availability: [],
+        availability: availability,
         meetings: []
       },
       validSessionIDs: []
@@ -83,7 +88,7 @@ module.exports = {
     if (!zipCode) throw 'zip code not specified';
 
     const usersCollection = await users();
-    const usersByZip = await usersCollection.find({ zipcode: zipCode }).toArray();
+    const usersByZip = await usersCollection.find({ "profile.zipcode": zipCode }).toArray();
 
     if (!usersByZip) throw `failed to find user with zip: ${zipCode}`;
 
@@ -124,21 +129,36 @@ module.exports = {
   },
 
   // returns an array of users by availability (day-of-the-week)
-  async getUsersByAvailability(day) {
+  async getUsersByDay(day) {
     if(!day) throw 'day not specified';
 
     const usersCollection = await users();
-    const usersByAvailibility = await usersCollection.find({availability: {$elemMatch: {$eq: day }}}).toArray();
+    const usersByDay = await usersCollection.find({"profile.availability": {$elemMatch: {$eq: day }}}).toArray();
 
-    if(!usersByAvailibility) throw `failed to find users with availability ${day}`;
+    if(!usersByDay) throw `failed to find users with availability ${day}`;
 
-    return usersByAvailibility;
+    return usersByDay;
+  },
+
+  // returns an array of users by complete availability list
+  async getUsersByAvailability(availabilityArr) {
+    if(!availabilityArr) throw 'availability not specified';
+
+    const usersCollection = await users();
+    const usersByAvailability = await usersCollection.find({"profile.availability": {$all: availabilityArr}}).toArray();
+
+    if(!usersByAvailability) 
+    {
+      return [];
+    }
+
+    return usersByAvailability;
   },
 
   // returns an array of users that have not been grouped
   async getUngroupedUsers() {
     const usersCollection = await users();
-    const ungroupedUsers = await usersCollection.find({grouped: 'false'}).toArray();
+    const ungroupedUsers = await usersCollection.find({"profile.grouped": 'false'}).toArray();
 
     if(!ungroupedUsers){ ungroupedUsers = []; }
 
@@ -311,27 +331,58 @@ module.exports = {
   
   // sorts any users who are not part of a group by day of the
   // week availability
-  async sortStudentsBy() {
+  async sortStudentsByDay() {
 
       // Get all un-grouped users
       const unGroupedUsers = await this.getUngroupedUsers();
 
-      const availibility = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      // Get the aggregate of unique availabilities
+      const avalabilities = await this.aggregateByAvailability();
 
-      let usersbyDayMap = {};
-
-      // Sort student users by availibility
-      for(i = 0; i < availibility.length; i++)
+      let availabilityMap = {};
+      for(i = 0; i < avalabilities.length; i++)
       {
-          let usersByAvailability =  await this.getUsersByAvailability(availibility[i]);
-          usersbyDayMap[availibility] = usersByAvailability;
+          let key = avalabilities[i]._id;
+          let value = await this.getUsersByAvailability(key);
+          availabilityMap[key] = value;
       }
 
-      if(!usersbyDayMap || Object.keys(usersbyDayMap).length == 0) {
-        throw 'unable to sort users by availability';
+      return availabilityMap;
+  },
+
+  // Aggregates the users collection by availability
+  async aggregateByAvailability() {
+
+      const usersCollection = await users();
+
+      const usersGroupedByDay = await usersCollection.aggregate([
+          {$match: {"profile.grouped" : "false"}},
+          {$group: {_id: "$profile.availability"}}
+        ]).toArray();
+
+      if(!usersGroupedByDay)
+      {
+        throw 'unable to group users by availability';
       }
 
-      return usersbyDayMap;
-  } 
+      return usersGroupedByDay;
+  },
 
+  // Aggregates the users collection by zip code
+  async aggregateByZipcode() {
+
+      const usersCollection = await users();
+
+      const usersGroupedByZip = await usersCollection.aggregate([
+          {$match: {"profile.grouped" : "false"}},
+          {$group: {_id: "$profile.zipcode"}}
+        ]).toArray();
+
+      if(!usersGroupedByZip)
+      {
+        throw 'unable to group users by zip code';
+      }
+
+      return usersGroupedByZip;
+  }
 }
