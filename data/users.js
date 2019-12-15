@@ -10,12 +10,24 @@ module.exports = {
   // create new user when someone registers
   async create(username, password, firstname, lastname, email, phone, zipcode, latitude, longitude, availability) {
     // error check
+    if(!username) throw 'Registration failed: username not provided';
+
+    if(!password) throw 'Registration failed: password not provided';
+
+    if(!firstname) throw 'Registration failed: firstname not provided';
+
+    if(!lastname) throw 'Registration failed: lastname not provided';
+
+    if(!email) throw 'Registration failed: email not provided';
+
+    if(!phone) throw 'Registration failed: phone not provided';
 
     // Blank zip, latitude, or longitude
     if (zipcode == '' || latitude == '' || longitude == '') {
       throw "Registration failed: Invalid zip code";
     }
 
+    // Blank availability should not be an error
     if(availability == null) 
     {
       availability = [];
@@ -23,9 +35,12 @@ module.exports = {
 
     // get users collection
     const usersCollection = await users();
-
+    const userNameExists = await usersCollection.findOne({username: username});
     // check if username exists
-
+    if(userNameExists)
+    {
+      throw 'Registration failed: Username already exists';
+    }
 
     // hash password with bcrypt
     const hash = await bcrypt.hash(password, saltRounds);
@@ -104,18 +119,6 @@ module.exports = {
     if (!oneUser) throw 'Failed to find user with that username';
     
     return oneUser;
-  },
-
-  // returns an array of users by availability (day-of-the-week)
-  async getUsersByAvailability(day) {
-    if(!day) throw 'day not specified';
-
-    const usersCollection = await users();
-    const usersByAvailibility = await usersCollection.find({availability: {$elemMatch: {$eq: day }}}).toArray();
-
-    if(!usersByAvailibility) throw `failed to find users with availability ${day}`;
-
-    return usersByAvailibility;
   },
 
   // returns an array of users that have not been grouped
@@ -298,6 +301,22 @@ module.exports = {
     else {
       return "Successfully updated profile with new availability";
     }
+  },
+
+  // update a user's grouped status
+  async updateUserGroupedStatus(id) {
+      if(!id) throw 'id not specified';
+
+      const usersCollection = await users();
+      const userQuery = await this.getUserById(id);
+      const updateInfo = {'profile.grouped': "true"};
+      const updateUser = await usersCollection.updateOne(userQuery, updateInfo);
+
+      if(updateUser.modifiedCount === 0) throw 'failed to update users grouped status';
+
+      else {
+        return await this.getUserById(id);
+      }
   },
 
   // adds a meeting to user, this will be called after algorithm matches a group
