@@ -23,7 +23,7 @@ router.post('/signup', async (req, res) => {
             requestData.zipcode, requestData.latitude, requestData.longitude,
             requestData.availability);
 
-        if (addUser === true) {
+        if (addUser != null) {
             res.redirect('/profile'); //upon successfull add, we redirect the user to their newly created profile.
         }
         else {

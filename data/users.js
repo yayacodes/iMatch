@@ -304,6 +304,7 @@ module.exports = {
         validSessionIDs: newValidSessionIDs
       };
       
+      const usersCollection = await users();
       const updatedInfo = await usersCollection.updateOne({username: userName}, {$set:updatedUser});
       if (updatedInfo.modifiedCount === 0) {
         throw "Could not add sessionID to user document"

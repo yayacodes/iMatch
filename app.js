@@ -76,8 +76,9 @@ app.use(function(req, res, next) {
   // console.log("1st middleware log requests, req.cookies =", req.cookies)
 
   let userAuth = "";
+  let suthenticated = req.session.loginStatus;
 
-  if (req.session.auth) {
+  if (suthenticated) {
     userAuth = "Authenticated User";
   } else {
     userAuth = "Non-Authenticated User";

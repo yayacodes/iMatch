@@ -19,7 +19,12 @@ router.get('/', async (req, res) => {
             });
         }
         if (authorized) {
-            res.render('user/dashboard');
+            const authUserData = {
+                userID: authUser.username,
+                location: {lat: authUser.profile.latitude, lng:authUser.profile.longitude},
+            };
+
+            res.render('user/dashboard', {userData: authUserData});
         } else {
             res.render('user/login', { error: "Incorrect username and/or password. Try again" });
         }
