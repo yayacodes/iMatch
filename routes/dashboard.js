@@ -6,6 +6,7 @@ router.get('/', async (req, res) => {
     try {
         //authorize user (check if the current session id exists in any user's validSessionIDs array)
         var authorized = false;
+        var authUser = null;
         let sessID = req.session.id;
         let allUsers = await userMethods.getUsers();
         
@@ -13,11 +14,17 @@ router.get('/', async (req, res) => {
             allUsers[i].validSessionIDs.forEach(function(validID){
                 if(validID == sessID){
                     authorized = true;
+                    authUser = allUsers[i];
                 }
             });
         }
-        if authorized {
-            res.render('user/dashboard');
+        if (authorized) {
+            const authUserData = {
+                userID: authUser.username,
+                location: {lat: authUser.profile.latitude, lng:authUser.profile.longitude},
+            };
+
+            res.render('user/dashboard', {userData: authUserData});
         } else {
             res.render('user/login', { error: "Incorrect username and/or password. Try again" });
         }

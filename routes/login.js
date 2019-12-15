@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/login', async (req,res) => {
+router.post('/', async (req,res) => {
     if (!req.body.username || !req.body.password) {
         res.status(401).render('user/login',{ error: "Please provide both a valid username and a valid password"});
         return;

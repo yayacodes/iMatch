@@ -17,10 +17,13 @@ router.get('/', async (req, res) => {
 router.post('/signup', async (req, res) => {
     let requestData = req.body;
     try {
+        let addUser = await userData.create(requestData.username, 
+            requestData.password, requestData.firstname, 
+            requestData.lastname, requestData.email, requestData.phone, 
+            requestData.zipcode, requestData.latitude, requestData.longitude,
+            requestData.availability);
 
-        let addUser = await userData.create(requestData.username, requestData.password, requestData.firstname, requestData.lastname, requestData.email, requestData.phone, requestData.zipcode, requestData.latitude, requestData.longitude);
-
-        if (addUser === true) {
+        if (addUser != null) {
             res.redirect('/profile'); //upon successfull add, we redirect the user to their newly created profile.
         }
         else {

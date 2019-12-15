@@ -1,0 +1,12 @@
+<div class="dashboard">
+    {{#if userData}}
+        <h2>Welcome {{userData.userID}}!</h2>
+
+        <!-- Displays meeting location -->
+        <div><p id="location" hidden>{{userData.location.lat}} {{userData.location.lng}}</p></div>
+        <p>// TODO: group and meeting information </p>
+        <!-- Map currently shows user's location -->
+        <h3>Meeting location:</h3>
+        <div id="gmap"></div>
+    {{/if}}
+</div>
