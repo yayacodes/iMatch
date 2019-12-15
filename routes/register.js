@@ -21,7 +21,7 @@ router.post('/signup', async (req, res) => {
             requestData.password, requestData.firstname, 
             requestData.lastname, requestData.email, requestData.phone, 
             requestData.zipcode, requestData.latitude, requestData.longitude,
-            requestData.availability);
+            requestData.availability, requestData.course);
 
         if (addUser != null) {
             res.redirect('/profile'); //upon successfull add, we redirect the user to their newly created profile.
