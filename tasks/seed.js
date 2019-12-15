@@ -17,7 +17,8 @@ async function main() {
       latitude: "40.744052",
       longitude: "-74.0270745",
       grouped: "false",
-      availability: ['Tuesday', 'Thursday', 'Friday']
+      availability: ['Tuesday', 'Thursday', 'Friday'],
+      course: ['CS546', 'CS550', 'CS554']
   }  
   
   const user2 = {
@@ -31,7 +32,8 @@ async function main() {
       latitude: "40.744052",
       longitude: "-74.0270745",
       grouped: "false",
-      availability: ['Monday', 'Wednesday', 'Saturday']
+      availability: ['Monday', 'Wednesday', 'Saturday'],
+      course: ['CS546', 'CS550', 'CS554']
   }  
   
   const user3 = {
@@ -45,7 +47,8 @@ async function main() {
       latitude: "34.054379",
       longitude: "-118.267281",
       grouped: "false",
-      availability: ['Monday', 'Tuesday']
+      availability: ['Monday', 'Tuesday'],
+      course: ['CS546', 'CS550', 'CS554']
   }
 
   const user4 = {
@@ -59,13 +62,14 @@ async function main() {
       latitude: "39.950802",
       longitude: "-75.160118",
       grouped: "false",
-      availability: ['Tuesday', 'Thursday', 'Friday']
+      availability: ['Tuesday', 'Thursday', 'Friday'],
+      course: ['CS546', 'CS550', 'CS554']
   } 
    
-  await users.create(user1.username, user1.password, user1.firstname, user1.lastname, user1.email, user1.phone, user1.zipcode, user1.latitude, user1.longitude, user1.availability);
-  await users.create(user2.username, user2.password, user2.firstname, user2.lastname, user2.email, user2.phone, user2.zipcode, user2.latitude, user2.longitude, user2.availability);
-  await users.create(user3.username, user3.password, user3.firstname, user3.lastname, user3.email, user3.phone, user3.zipcode, user3.latitude, user3.longitude, user3.availability);
-  await users.create(user4.username, user4.password, user4.firstname, user4.lastname, user4.email, user4.phone, user4.zipcode, user4.latitude, user4.longitude, user4.availability);
+  await users.create(user1.username, user1.password, user1.firstname, user1.lastname, user1.email, user1.phone, user1.zipcode, user1.latitude, user1.longitude, user1.availability, user1.course);
+  await users.create(user2.username, user2.password, user2.firstname, user2.lastname, user2.email, user2.phone, user2.zipcode, user2.latitude, user2.longitude, user2.availability, user2.course);
+  await users.create(user3.username, user3.password, user3.firstname, user3.lastname, user3.email, user3.phone, user3.zipcode, user3.latitude, user3.longitude, user3.availability, user3.course);
+  await users.create(user4.username, user4.password, user4.firstname, user4.lastname, user4.email, user4.phone, user4.zipcode, user4.latitude, user4.longitude, user4.availability, user4.course);
 
   console.log("Done seeding database");
 
