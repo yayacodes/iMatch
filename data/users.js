@@ -373,9 +373,9 @@ module.exports = {
 
   // **** Sorting functions ****
   
-  // creating a mapping of ungrouped users by availability
+  // create a mapping of ungrouped users by availability
   // NOTE: this function matchs exact availabilities
-  async sortStudentsByDay() {
+  async sortStudentsByAvailability() {
 
       // Get all un-grouped users
       const unGroupedUsers = await this.getUngroupedUsers();
@@ -392,6 +392,28 @@ module.exports = {
       }
 
       return availabilityMap;
+  },
+
+  // create a mapping of ungrouped users by location
+  // NOTE: this fuction matches exact zip codes
+  async sortStudentsByLocation() {
+
+      // Get all un-grouped users
+      const unGroupedUsers = await this.getUngroupedUsers();
+
+      // Get the aggregate of unique zip codes
+      const zipCodes = await this.aggregateByZipcode();
+
+      let zipCodeMap = {};
+
+      for(i = 0; i < zipCodes.length; i++)
+      {
+          let key = zipCodes[i]._id;
+          let value = await this.getUsersByZip(key);
+          zipCodeMap[key] = value;
+      }
+
+      return zipCodeMap;
   },
 
   // Aggregates the users collection by availability
@@ -436,7 +458,7 @@ module.exports = {
     const usersCollection = await users();
 
     const usersGroupedByCourse = await usersCollection.aggregate([
-        {$match {"profile.grouped" : "false"}},
+        {$match: {"profile.grouped" : "false"}},
         {$group: {_id: "$profile.course"}}
       ]).toArray();
 

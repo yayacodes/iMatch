@@ -6,8 +6,10 @@ async function main() {
   const db = await dbConnection();
 
   try{
-    let userMap = await users.sortStudentsByDay();
+    let userMap = await users.sortStudentsByAvailability();
+    let userByZipMap = await users.sortStudentsByLocation();
     console.log(userMap);
+    console.log(userByZipMap);
   }
   catch(e)
   {
