@@ -3,6 +3,7 @@ const dashboardRoutes = require("./dashboard");
 const registerRoutes = require("./register");
 const profileRoutes = require("./profile");
 const loginRoutes = require("./login");
+const logoutRoutes = require("./logout");
 
 const constructorMethod = app => {
   app.use("/users", userRoutes);
@@ -10,6 +11,7 @@ const constructorMethod = app => {
   app.use("/register", registerRoutes);
   app.use("/profile", profileRoutes);
   app.use("/login", loginRoutes);
+  app.use("/logout", logoutRoutes);
 
   app.get("/", async (req, res) => {
     // either show static welcome page or redirect

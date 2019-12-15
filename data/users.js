@@ -190,20 +190,44 @@ module.exports = {
 
     const usersCollection = await users();
     const userQuery = await this.getUserById(id);
+
+    let newFirstname = userQuery.profile.firstname;
+    let newLastname = userQuery.profile.lastname;
+    let newEmail = userQuery.profile.email;
+    let newPhone = userQuery.profile.phone;
+    let newZipcode = userQuery.profile.zipcode;
+
+    if (firstname) newFirstname = firstname;
+    if (lastname) newLastname = lastname;
+    if (email) newEmail = email;
+    if (phone) newPhone = phone;
+    if (zipcode) newZipcode = zipcode;
+
     const updateQuery = {
-      $set:
-      {
-        "firstname": firstname,
-        "lastname": lastname,
-        "email": email,
-        "phone": phone,
-        "zipcode": zipcode
+      $set: {
+        profile: {
+          id: id,
+          firstname: newFirstname,
+          lastname: newLastname,
+          email: newEmail,
+          phone: newPhone,
+          zipcode: newZipcode,
+          latitude: userQuery.profile.latitude,
+          longitude: userQuery.profile.longitude,
+          grouped: userQuery.profile.grouped,
+          title: userQuery.profile.title,
+          course: userQuery.profile.course,
+          availability: userQuery.profile.availability,
+          meetings: userQuery.profile.meetings
+        }
       }
     };
 
     const updateInfo = await usersCollection.updateOne(userQuery, updateQuery);
-    if (updateInfo.modifiedCount === 0) throw `failed to update user with id: ${id}`;
-    else {
+    if (updateInfo.modifiedCount === 0) {
+      throw `failed to update user with id: ${id}`;
+    } else {
+      console.log("success");
       return "Successfully updated profile";
     }
   },

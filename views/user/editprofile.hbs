@@ -1,0 +1,31 @@
+<div class="form-container">
+
+  <form class="server-form" id="editprofile-form" method="POST" action="/profile/edit-profile">
+    <div class="form-group">
+      <label for="newFirstname">First Name:</label><br>
+      <input type="text" id="newFirstname" name="newFirstname" placeholder="{{ oldFirstname }}" value="{{ oldFirstname }}">
+    </div>
+    <div class="form-group">
+      <label for="newLastname">Last Name:</label><br>
+      <input type="text" id="newLastname" name="newLastname" placeholder="{{ oldLastname }}" value="{{ oldLastname }}">
+    </div>
+    <div class="form-group">
+      <label for="newEmail">Email:</label><br>
+      <input type="newEmail" id="newEmail" name="newEmail" placeholder="{{ oldEmail }}" value="{{ oldEmail }}">
+    </div>
+    <div class="form-group">
+      <label for="newPhone">Phone:</label><br>
+      <input type="text" id="newPhone" name="newPhone" placeholder="{{ oldPhone }}" value="{{ oldPhone }}">
+    </div>
+    <div class="form-group">
+      <label for="newZipcode">Zipcode:</label><br>
+      <input type="text" id="newZipcode" name="newZipcode" placeholder="{{ oldZipcode }}" value="{{ oldZipcode }}">
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-editprofile-form">Save Changes</button>
+    </div> 
+  </form>
+
+  <p>Cancel and return to profile <a href="http://localhost:3000/profile">here.</a></p>
+</div>

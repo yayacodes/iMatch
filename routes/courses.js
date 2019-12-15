@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const courseData = data.courses;
+const userData = data.users;
 
-// testing DB seed
 // testing DB seed
 router.get('/', async (req, res) => {
   try {
