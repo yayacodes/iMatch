@@ -373,8 +373,8 @@ module.exports = {
 
   // **** Sorting functions ****
   
-  // sorts any users who are not part of a group by day of the
-  // week availability
+  // creating a mapping of ungrouped users by availability
+  // NOTE: this function matchs exact availabilities
   async sortStudentsByDay() {
 
       // Get all un-grouped users
@@ -428,5 +428,23 @@ module.exports = {
       }
 
       return usersGroupedByZip;
+  },
+
+  // Aggregates the users collection by course
+  async aggregateByCourse() {
+
+    const usersCollection = await users();
+
+    const usersGroupedByCourse = await usersCollection.aggregate([
+        {$match {"profile.grouped" : "false"}},
+        {$group: {_id: "$profile.course"}}
+      ]).toArray();
+
+    if(!usersGroupedByCourse)
+    {
+      throw 'unable to group users by course';
+    }
+
+    return usersGroupedByCourse;
   }
 }
