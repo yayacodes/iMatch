@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
             }
           });
         }
-        if (authorized) {
+        if (authorized && authUser.role === 'student')  {
             const groupName = await userMethods.getUserGroupName(authUser._id);
 
             const authUserData = {
@@ -29,6 +29,8 @@ router.get('/', async (req, res) => {
             };
 
             res.render('user/dashboard', {userData: authUserData});
+        } else if (authorized && authUser.role === 'professor') {
+            res.redirect('/professor');
         } else {
             res.render('user/login', { error: "Incorrect username and/or password. Try again" });
         }

@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
                 }
             });
         }
-        if (authorized) {
+        if (authorized && authUser.role === 'professor') {
             const courses = courseMethods.getCourses();
 
             res.render('user/professor', {
@@ -31,6 +31,8 @@ router.get('/', async (req, res) => {
               phone: authUser.profile.phone,
               course: courses});
             
+        } else if (authorized && authUser.role === 'student') {
+            res.redirect('/dashboard');
         } else {
             res.render('user/login', { error: "Incorrect username and/or password. Try again" });
         }
@@ -56,7 +58,7 @@ router.post('/', async (req, res) => {
                 }
             });
         }
-        if (authorized) {
+        if (authorized && authUser.role === 'professor') {
             if (!req.body.course_name) {
                 res.status(401).render('user/professor',{ error: "Please provide the name of the course you want to sort groups"});
                 return;
@@ -79,6 +81,8 @@ router.post('/', async (req, res) => {
             //call the sorting algorithm
             await sortMethods.groupUsersByStrictAvailability(chosenCourse.groupSize);
             
+        } else if (authorized && authUser.role === 'student') {
+            res.redirect('/dashboard');
         } else {
             res.render('user/login', { error: "Incorrect username and/or password. Try again" });
         }
