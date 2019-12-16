@@ -1,6 +1,6 @@
 const uuid = require('uuid/v4');
 const mongoCollections = require('../config/mongoCollections');
-const users = mongoCollections.users;
+const users = require("../data/users.js")
 
 // Splits an array into n elements
 function splitArray(a, n, balanced) {
@@ -51,8 +51,6 @@ module.exports = {
     {
       throw 'Max maxGroupSize must be a number';
     }
-
-    const db = await dbConnection();
 
     try{
 
@@ -142,11 +140,7 @@ module.exports = {
     }
     catch(e)
     {
-      console.log(e);
-    }
-    finally
-    {
-      await db.serverConfig.close();
+      throw e;
     }
   }
 }

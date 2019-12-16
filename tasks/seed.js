@@ -90,6 +90,20 @@ async function main() {
       longitude: "-74.0270745",
       availability: ['Tuesday', 'Thursday', 'Friday']
   } 
+
+  const professor = {
+      username: "professor1",
+      password: "password7",
+      firstname: "firstname7",
+      lastname: "lastname7",
+      email: "email7@gmail.com",
+      phone: "777-123-4567",
+      role: "professor",
+      zipcode: "07030",
+      latitude: "40.744052",
+      longitude: "-74.0270745",
+      availability: []
+  } 
    
   await users.create(user1.username, user1.password, user1.firstname, user1.lastname, user1.email, user1.phone, user1.role, user1.zipcode, user1.latitude, user1.longitude, user1.availability);
   await users.create(user2.username, user2.password, user2.firstname, user2.lastname, user2.email, user2.phone, user2.role, user2.zipcode, user2.latitude, user2.longitude, user2.availability);
