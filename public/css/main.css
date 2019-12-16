@@ -1,3 +1,69 @@
 #gmap{ margin-top: 5px;
        width: 300px;
-       height: 300px;}
+       height: 300px;
+	   }
+	
+#page-container {
+	position: relative;
+	min-height: 100vh;
+}
+
+#content-wrap {
+	padding-bottom: 2.5rem 
+}
+
+body {
+  background: #008080;
+  font-family:"Times New Roman", Times, serif;
+  font-size: 15pt;
+}
+
+main {
+  max-width: 75%;
+  margin: auto;
+}
+
+header {
+  border-bottom: 1px solid #afafaf;
+}
+
+content-wrap {
+	padding-bottom: 2.5rem;
+}
+
+footer {
+	position: absolute;
+	text-align: center;
+	color:blue;
+	bottom: 0;
+}
+
+input[type=text] {
+  width:20%;
+  padding: 6px 10px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid red;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=email] {
+  width:20%;
+  padding:6px 10px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid red;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=password] {
+  width:20%;
+  padding: 6px 10px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid red;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
