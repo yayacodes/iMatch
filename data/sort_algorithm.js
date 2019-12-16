@@ -43,7 +43,7 @@ function splitArray(a, n, balanced) {
     return out;
 }
 
-// First pass to form groups of users strictly by availability
+// Form groups of users strictly by availability
 module.exports = {
   async groupUsersByStrictAvailability(maxGroupSize) {
     
@@ -102,7 +102,7 @@ module.exports = {
         {
             // Slpit the value array into multiple arrays
             let balancedSplit = true;
-            if(maxGroupSize % 2 != 0)
+            if(maxGroupSize % 2 != 0 || value.length % 2 != 0)
             {
               balancedSplit = false;
             }
