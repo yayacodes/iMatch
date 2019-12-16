@@ -12,16 +12,33 @@
   <br>
   <h2>Courses List</h2>
   <br>
-  <ul class="courses_list">
+  <ul class="courses_list" style="list-style-type:none;">
     {{#each course}}
       <li>Course name: {{name}}</li>
       <li>Max group size: {{groupSize}}</li>
     {{/each}}
   </ul>
+  <h3>Students:</h3>
+  <table class="students">
+      <tr>
+        <th>Lastname</th>
+        <th>Firstname</th>
+        <th>Course</th>
+        <th>Group Name</th>
+      </tr>
+      {{#each student}}
+      <tr>
+        <td>{{lastname}}</td> 
+        <td>{{firstname}}</td> 
+        <td>{{course}}</td> 
+        <td>{{groupname}}</td>
+      </tr>
+      {{/each}}
+  </table>
   
   <br>
   <h2>Please enter the name of the course you want to sort groups:</h2>
-  <form id='sort_form' method='POST' action='/dashboard'>
+  <form id='sort_form' method='POST' action='/professor'>
   	<label for='course_name'>Course name:</label>
     	<input type='text' name='course_name' id='course_name'>
   	<button type='Submit' value='Sort Groups'>Sort Groups</button>

@@ -68,8 +68,7 @@ module.exports = {
           zipcode: zipcode,
           latitude: latitude,
           longitude: longitude,
-          title: "student",
-          course: ["Web Programming"],
+          course: ["web programming"],
           availability: availability,
           meetings: [],
           groups: []
@@ -144,25 +143,50 @@ module.exports = {
     return oneUser;
   },
 
+  // returns an array of users with the role student
+  async getStudentUsers() {
+
+    const usersCollection = await users();
+    const students = await usersCollection.find({"role": "student"}).toArray();
+
+    if(!students) throw 'unable to get student users';
+
+    return students;
+
+  },
+
   // returns an array of users that have not been grouped
   async getUngroupedUsers() {
     const usersCollection = await users();
-    const ungroupedUsers = await usersCollection.find({"profile.groups": { $exists: true, $size: 0 }}).toArray();
+    const ungroupedUsers = await usersCollection.find({"profile.groups": { $exists: true, $size: 0 }, "role": "student"}).toArray();
 
     return ungroupedUsers;
   },
 
   // returns the name of a user's group
   async getUserGroupName(id) {
+
       if(!id) throw 'id not specified';
 
       const user = await this.getUserById(id);
       let userGroup = user.profile.groups[0];
 
-      if(!userGroup) throw 'unable to access user group';
+      if(!userGroup) userGroup = { groupname: "none"};
 
       return userGroup.groupname;
 
+  },
+
+  // returns the name of a stuent's course
+  async getUserCourse(id) {
+     if(!id) throw 'id not specified';
+
+      const user = await this.getUserById(id);
+      let usercCourse = user.profile.course[0];
+
+      if(!usercCourse) throw 'unable to access user courses';
+
+      return usercCourse;
   },
 
   // returns an array of users by availability (day-of-the-week)

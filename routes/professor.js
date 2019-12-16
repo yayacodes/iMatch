@@ -21,7 +21,25 @@ router.get('/', async (req, res) => {
             });
         }
         if (authorized) {
-            const courses = courseMethods.getCourses();
+            const courses = await courseMethods.getCourses();
+            const studentUsers = await userMethods.getStudentUsers();
+
+            let studentsList = []
+            for(i = 0; i < studentUsers.length; i++)
+            {
+                var user = studentUsers[i];
+                var groupName = await userMethods.getUserGroupName(user._id);
+                var courseName = await userMethods.getUserCourse(user._id)
+
+                let student = {
+                    lastname: user.profile.lastname,
+                    firstname: user.profile.firstname,
+                    course: courseName,
+                    groupname: groupName
+                };
+
+                studentsList.push(student);
+            }
 
             res.render('user/professor', {
               username: authUser.username, 
@@ -29,7 +47,9 @@ router.get('/', async (req, res) => {
               lastname: authUser.profile.lastname,
               email: authUser.profile.email,
               phone: authUser.profile.phone,
-              course: courses});
+              course: courses,
+              student: studentsList
+          });
             
         } else {
             res.render('user/login', { error: "Incorrect username and/or password. Try again" });
@@ -62,7 +82,8 @@ router.post('/', async (req, res) => {
                 return;
             } 
             
-            const courses = courseMethods.getCourses();
+            const courses = await courseMethods.getCourses();
+
             var chosenCourse = null;
             
             //look for course with given course name
@@ -76,8 +97,10 @@ router.post('/', async (req, res) => {
                 return;
             } 
             
-            //call the sorting algorithm
-            await sortMethods.groupUsersByStrictAvailability(chosenCourse.groupSize);
+            // call the sorting algorithm
+            await sortMethods.groupUsersByStrictAvailability(parseInt(chosenCourse.groupSize));
+
+            res.redirect('/professor');
             
         } else {
             res.render('user/login', { error: "Incorrect username and/or password. Try again" });
