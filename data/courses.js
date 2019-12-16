@@ -94,7 +94,6 @@ module.exports = {
     }
 
     return await this.getUserById(id);
-  }
 },
 
   // adds a group to course, called via algorithm that matches students
