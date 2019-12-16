@@ -98,7 +98,7 @@ router.post('/', async (req, res) => {
             // call the sorting algorithm
             await sortMethods.groupUsersByStrictAvailability(parseInt(chosenCourse.groupSize));
 
-            // 
+            res.redirect('/professor');
             
         } else {
             res.render('user/login', { error: "Incorrect username and/or password. Try again" });
