@@ -33,7 +33,6 @@ router.get('/', async (req, res) => {
         zipcode: authUser.profile.zipcode});//{userData: authUserData});
     } else {
       res.redirect('/login');
-      // res.render('user/login', { error: "Incorrect username and/or password. Try again" });
     }
   } catch (e) {
     res.status(404).json({ error: e });
@@ -69,7 +68,6 @@ router.get('/edit-profile', async(req, res) => {
         oldZipcode: authUser.profile.zipcode});//{userData: authUserData});
     } else {
       res.redirect('/login');
-      // res.redirect('/login', { error: "Incorrect username and/or password. Try again" });
     }
   } catch (e) {
     res.status(500).json({ error: "user database error"});
@@ -120,7 +118,6 @@ router.post('/edit-profile', async(req, res) => {
       // };
     } else {
       res.redirect('/login');
-      // res.render('user/login', { error: "Incorrect username and/or password. Try again" });
     }
     
   } catch (err) {
