@@ -1,6 +1,7 @@
 const dbConnection = require("../config/mongoConnection");
 const data = require("../data/");
 const users = data.users;
+const courses = data.courses;
 
 async function main() {
   const db = await dbConnection();
@@ -66,6 +67,13 @@ async function main() {
   await users.create(user2.username, user2.password, user2.firstname, user2.lastname, user2.email, user2.phone, user2.zipcode, user2.latitude, user2.longitude, user2.availability);
   await users.create(user3.username, user3.password, user3.firstname, user3.lastname, user3.email, user3.phone, user3.zipcode, user3.latitude, user3.longitude, user3.availability);
   await users.create(user4.username, user4.password, user4.firstname, user4.lastname, user4.email, user4.phone, user4.zipcode, user4.latitude, user4.longitude, user4.availability);
+
+  const course1 = {
+    name: "web programming",
+    groupSize: 4
+  }
+
+  await courses.addCourse(course1.name, course1.groupSize);
 
   console.log("Done seeding database");
 

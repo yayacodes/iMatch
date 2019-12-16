@@ -4,33 +4,29 @@ const uuid = require('uuid/v4');
 
 module.exports = {
   // adds a course to the db, this will be pre-populated by the "professor" or "system"
-  async addCourse(courseName, courseType) {
+  async addCourse(courseName, groupSize) {
     // error check
-    if(courseType.length === 0) throw "you must provide a valid courseType";
+    if (typeof courseName !== 'string') throw "must provide a valid course name (string)";
+    if (typeof groupSize !== 'number') throw 'must provide a valid group size (number)'
     // get users collection
     const coursesCollection = await courses();
 
     // check if username exists
 
-
     const courseId = uuid();
 
-  let newCourse = {
-		coursename: courseName,
-		courseType: courseType,
-		courseId: {
-			  _id: [uuid.v4()]
-		}
+    let newCourse = {
+      _id: courseId,
+      name: courseName,
+      groupSize: groupSize,
+      students: [],
+      groups: []
     };
 
-    const insertInfo = await coursessCollection.insertOne(newCourse);
+    const insertInfo = await coursesCollection.insertOne(newCourse);
     if (insertInfo.insertedCount === 0) throw "failed to add new course";
     
-    const newCourseId = insertInfo.insertedId;
-    
-    const courses = await this.get(newCourseId);
-
-    return courses;
+    return await this.getCourseById(insertInfo.insertedId);
   },
 
   // returns a list of all courses in the database
