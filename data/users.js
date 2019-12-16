@@ -10,12 +10,24 @@ module.exports = {
   // create new user when someone registers
   async create(username, password, firstname, lastname, email, phone, zipcode, latitude, longitude, availability) {
     // error check
+    if(!username) throw 'Registration failed: username not provided';
+
+    if(!password) throw 'Registration failed: password not provided';
+
+    if(!firstname) throw 'Registration failed: firstname not provided';
+
+    if(!lastname) throw 'Registration failed: lastname not provided';
+
+    if(!email) throw 'Registration failed: email not provided';
+
+    if(!phone) throw 'Registration failed: phone not provided';
 
     // Blank zip, latitude, or longitude
     if (zipcode == '' || latitude == '' || longitude == '') {
       throw "Registration failed: Invalid zip code";
     }
 
+    // Blank availability should not be an error
     if(availability == null) 
     {
       availability = [];
@@ -23,9 +35,12 @@ module.exports = {
 
     // get users collection
     const usersCollection = await users();
-
+    const userNameExists = await usersCollection.findOne({username: username});
     // check if username exists
-
+    if(userNameExists)
+    {
+      throw 'Registration failed: Username already exists';
+    }
 
     // hash password with bcrypt
     const hash = await bcrypt.hash(password, saltRounds);
@@ -44,11 +59,11 @@ module.exports = {
         zipcode: zipcode,
         latitude: latitude,
         longitude: longitude,
-        grouped: 'false',
         title: "student",
         course: [],
         availability: availability,
-        meetings: []
+        meetings: [],
+        groups: []
       },
       validSessionIDs: []
     };
@@ -106,24 +121,10 @@ module.exports = {
     return oneUser;
   },
 
-  // returns an array of users by availability (day-of-the-week)
-  async getUsersByAvailability(day) {
-    if(!day) throw 'day not specified';
-
-    const usersCollection = await users();
-    const usersByAvailibility = await usersCollection.find({availability: {$elemMatch: {$eq: day }}}).toArray();
-
-    if(!usersByAvailibility) throw `failed to find users with availability ${day}`;
-
-    return usersByAvailibility;
-  },
-
   // returns an array of users that have not been grouped
   async getUngroupedUsers() {
     const usersCollection = await users();
-    const ungroupedUsers = await usersCollection.find({grouped: 'false'}).toArray();
-
-    if(!ungroupedUsers){ ungroupedUsers = []; }
+    const ungroupedUsers = await usersCollection.find({"profile.groups": { $exists: true, $size: 0 }}).toArray();
 
     return ungroupedUsers;
   },
@@ -155,15 +156,19 @@ module.exports = {
     return usersByAvailability;
   },
 
-  // returns an array of users that have not been grouped
-  async getUngroupedUsers() {
+  // returns an array of users by complete course list
+  async getUsersByCourse(courseArray) {
+    if(!courseArray) throw 'courses not specified';
+
     const usersCollection = await users();
-    const ungroupedUsers = await usersCollection.find({"profile.grouped": 'false'}).toArray();
+    const usersByCourse = await usersCollection.find({"profile.course": {$all: courseArray}}).toArray();
 
-    if(!ungroupedUsers){ ungroupedUsers = []; }
+    if(!usersByCourse) 
+    {
+      return [];
+    }
 
-    return ungroupedUsers;
-
+    return usersByCourse;
   },
 
   // remove user with the given id from database
@@ -300,6 +305,26 @@ module.exports = {
     }
   },
 
+  // update a user's groups
+  async updateUserGroup(id, groupInfo) {
+      if(!id) throw 'id not specified';
+
+      if(!groupInfo || Object.keys(groupInfo).length === 0) throw 'invalid group object';
+
+      const usersCollection = await users();
+      const userQuery = await this.getUserById(id);
+      const updateInfo = {
+        $push: {'profile.groups': groupInfo}
+      };
+      const updateUser = await usersCollection.updateOne(userQuery, updateInfo);
+
+      if(updateUser.modifiedCount === 0) throw 'failed to update user\'s groups';
+
+      else {
+        return await this.getUserById(id);
+      }
+  },
+
   // adds a meeting to user, this will be called after algorithm matches a group
   // and finds a common meeting time/place
   async addMeetingToUser(userId, meetingId, meetingTitle) {
@@ -354,9 +379,9 @@ module.exports = {
 
   // **** Sorting functions ****
   
-  // sorts any users who are not part of a group by day of the
-  // week availability
-  async sortStudentsByDay() {
+  // create a mapping of ungrouped users by availability
+  // NOTE: this function matchs exact availabilities
+  async sortStudentsByAvailability() {
 
       // Get all un-grouped users
       const unGroupedUsers = await this.getUngroupedUsers();
@@ -375,13 +400,60 @@ module.exports = {
       return availabilityMap;
   },
 
+  // create a mapping of ungrouped users by location
+  // NOTE: this fuction matches exact zip codes
+  async sortStudentsByLocation() {
+
+      // Get all un-grouped users
+      const unGroupedUsers = await this.getUngroupedUsers();
+
+      // Get the aggregate of unique zip codes
+      const zipCodes = await this.aggregateByZipcode();
+
+      let zipCodeMap = {};
+
+      for(i = 0; i < zipCodes.length; i++)
+      {
+          let key = zipCodes[i]._id;
+          let value = await this.getUsersByZip(key);
+          zipCodeMap[key] = value;
+      }
+
+      return zipCodeMap;
+  },
+
+  // create a mapping of ungrouped users by course
+  // NOTE: this fuction matches all students in a course
+  async sortStudentsByCourse(courseName) {
+
+      if(!courseName) throw 'course name not specified';
+
+
+      // Get all un-grouped users
+      const unGroupedUsers = await this.getUngroupedUsers();
+
+      // Get the aggregate of unique zip codes
+      const courses = await this.aggregateByCourse();
+
+      let courseMap = {};
+
+      for(i = 0; i < courses.length; i++)
+      {
+          let key = courses[i]._id;
+          let value = await this.getUsersByCourse(key);
+          courseMap[key] = value;
+      }
+
+      return courseMap;
+  },
+
   // Aggregates the users collection by availability
   async aggregateByAvailability() {
 
       const usersCollection = await users();
 
       const usersGroupedByDay = await usersCollection.aggregate([
-          {$match: {"profile.grouped" : "false"}},
+          {$match: {"profile.groups" : { $exists: true, $size: 0 }}},
           {$group: {_id: "$profile.availability"}}
         ]).toArray();
 
@@ -399,7 +471,7 @@ module.exports = {
       const usersCollection = await users();
 
       const usersGroupedByZip = await usersCollection.aggregate([
-          {$match: {"profile.grouped" : "false"}},
+          {$match: {"profile.groups" : { $exists: true, $size: 0 }}},
           {$group: {_id: "$profile.zipcode"}}
         ]).toArray();
 
@@ -409,5 +481,23 @@ module.exports = {
       }
 
       return usersGroupedByZip;
+  },
+
+  // Aggregates the users collection by course
+  async aggregateByCourse() {
+
+    const usersCollection = await users();
+
+    const usersGroupedByCourse = await usersCollection.aggregate([
+        {$match: {"profile.groups" : { $exists: true, $size: 0 }}},
+        {$group: {_id: "$profile.course"}}
+      ]).toArray();
+
+    if(!usersGroupedByCourse)
+    {
+      throw 'unable to group users by course';
+    }
+
+    return usersGroupedByCourse;
   }
 }
