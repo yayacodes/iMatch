@@ -82,6 +82,13 @@ module.exports = {
         username: username,
         hashedPassword: hash,
         role: 'professor',
+        profile: {
+          id: userId,
+          firstname: firstname,
+          lastname: lastname,
+          email: email,
+          phone: phone,
+        },
         validSessionIDs: []
       };
     }
