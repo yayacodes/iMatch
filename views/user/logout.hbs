@@ -1,4 +1,16 @@
 <h2>Logged out</h2>
 
 <p>Successfully logged out!</p>
-<p>Return to log in <a href="http://localhost:3000/login">here.</a></p>
+<p>Return to:</p>
+
+<form action="/" method="GET" id="home-form">
+    <label for="home-button">
+        <input id="home-button" type="submit" value="Home Page" />
+    </label>
+</form>
+
+<form action="/login" method="get" id="login-form">
+    <label for="login-button">
+        <input id="login-button" type="submit" value="Login Page" />
+    </label>
+</form>

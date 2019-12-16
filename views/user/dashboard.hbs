@@ -1,17 +1,33 @@
 <div class="dashboard">
     {{#if userData}}
-        <h2>Welcome {{userData.userID}}!</h2>
-        
-        <!-- Displays meeting location -->
-        <!-- Hidden location data for map -->
-        <div><p id="location" hidden>{{userData.location.lat}} {{userData.location.lng}}</p></div>
-        <div><p id="course"> Course: {{userData.course}}</p></div>
-        <div><p id="group"> Group: {{userData.group}}</p></div>
-        
-        <h3>Meeting location:</h3>
-        <div id="gmap"></div>
+    <h2>Welcome <span id="userID">{{userData.userID}}!</span></h2>
+
+    <!-- Displays meeting location -->
+    <!-- Hidden location data for map -->
+    <div>
+        <p id="location" hidden>{{userData.location.lat}} {{userData.location.lng}}</p>
+    </div>
+    <div>
+        <p id="course"> <span id="dash-info">Course:</span> {{userData.course}}</p>
+    </div>
+    <div>
+        <p id="group"> <span id="dash-info">Group:</span> {{userData.group}}</p>
+    </div>
+
+    <h3>Meeting location:</h3>
+    <div id="gmap"></div>
     {{/if}}
+
+    <form action="/profile" method="GET" id="profile-form">
+        <label for="profile-button">
+            <input id="profile-button" type="submit" value="My Profile" />
+        </label>
+    </form>
     
-	<p>View profile <a href="http://localhost:3000/profile">here.</a></p>
-	<p>Log out <a href="http://localhost:3000/logout">here.</a></p>
+    <form action="/logout" method="GET" id="logout-form">
+        <label for="logout-button">
+            <input id="logout-button" type="submit" value="Logout" />
+        </label>
+    </form>
+
 </div>

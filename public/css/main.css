@@ -1,20 +1,22 @@
-#gmap{ margin-top: 5px;
-       width: 300px;
-       height: 300px;
-	   }
-	
+#gmap {
+  margin-top: 5px;
+  width: 300px;
+  height: 300px;
+  margin-bottom: 15px;
+}
+
 #page-container {
-	position: relative;
-	min-height: 100vh;
+  position: relative;
+  min-height: 100vh;
 }
 
 #content-wrap {
-	padding-bottom: 2.5rem 
+  padding-bottom: 2.5rem
 }
 
 body {
-  background: #008080;
-  font-family:"Times New Roman", Times, serif;
+  background: #a1dbdb;
+  font-family: "Times New Roman", Times, serif;
   font-size: 15pt;
 }
 
@@ -28,18 +30,18 @@ header {
 }
 
 content-wrap {
-	padding-bottom: 2.5rem;
+  padding-bottom: 2.5rem;
 }
 
 footer {
-	position: relative;
-	text-align: center;
-	color:blue;
-	bottom: 0;
+  position: relative;
+  text-align: center;
+  color: darkblue;
+  bottom: 0;
 }
 
 input[type=text] {
-  width:20%;
+  width: 20%;
   padding: 6px 10px;
   margin: 8px 0;
   display: inline-block;
@@ -49,8 +51,8 @@ input[type=text] {
 }
 
 input[type=email] {
-  width:20%;
-  padding:6px 10px;
+  width: 20%;
+  padding: 6px 10px;
   margin: 8px 0;
   display: inline-block;
   border: 1px solid red;
@@ -59,7 +61,7 @@ input[type=email] {
 }
 
 input[type=password] {
-  width:20%;
+  width: 20%;
   padding: 6px 10px;
   margin: 8px 0;
   display: inline-block;
@@ -71,4 +73,136 @@ input[type=password] {
 th, td {
   padding: 15px;
   text-align: center;
+}
+
+.role {
+  color: green;
+  text-decoration: underline;
+}
+
+#register-button {
+  color: green;
+  background: green;
+  border: 2px solid green;
+  border-radius: 6px;
+  font-size: 18px;
+  padding: 12px 55px;
+  color: white
+}
+
+#register-button:hover {
+  background-color: darkgreen;
+  color: white;
+}
+
+#login-button {
+  color: green;
+  background: green;
+  border: 2px solid green;
+  border-radius: 6px;
+  font-size: 16px;
+  padding: 5px 55px;
+  color: white
+}
+
+#login-button:hover{
+  background-color: darkgreen;
+  color: white;
+}
+
+#register-title {
+  text-align: center;
+}
+
+#error {
+  color: red;
+}
+
+#userID{
+  color: blue;
+}
+
+#logout-button {
+  color: darkred;
+  background: darkred;
+  border: 2px solid darkred;
+  border-radius: 6px;
+  font-size: 16px;
+  padding: 5px 55px;
+  color: white
+}
+
+#logout-button:hover{
+  background-color: red;
+  color: white;
+}
+
+#profile-button {
+  color: blue;
+  background: blue;
+  border: 2px solid blue;
+  border-radius: 6px;
+  font-size: 16px;
+  padding: 5px 55px;
+  color: white;
+  margin-bottom: 20px
+}
+
+#profile-button:hover{
+  background-color: cyan;
+  border: 2px solid blue;
+  border-radius: 6px;
+  color: black;
+}
+
+#profile-info, #dash-info, #course-name{
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+#dashboard-button {
+  color: rgb(255, 153, 0);
+  background: rgb(255, 153, 0);
+  border: 2px solid rgb(255, 153, 0);
+  border-radius: 6px;
+  font-size: 16px;
+  padding: 5px 55px;
+  color: white;
+  margin-bottom: 20px
+}
+
+#dashboard-button:hover{
+  background-color: orange;
+  border: 2px solid rgb(255, 153, 0);
+  border-radius: 6px;
+  color: black;
+}
+
+#sort-groups{
+  color: blue;
+  background: blue;
+  border: 2px solid blue;
+  border-radius: 6px;
+  font-size: 16px;
+  padding: 3px 20px;
+  color: white;
+  margin-bottom: 20px
+}
+
+#home-button {
+  color: rgb(132, 0, 255);
+  background: rgb(132, 0, 255);
+  border: 2px solid rgb(132, 0, 255);
+  border-radius: 6px;
+  font-size: 16px;
+  padding: 5px 55px;
+  color: white;
+  margin-bottom: 20px
+}
+
+#home-button:hover{
+  background-color: purple;
+  border: 2px solid rgb(132, 0, 255);
+  border-radius: 6px;
+  color: white;
 }

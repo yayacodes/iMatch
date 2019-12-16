@@ -1,53 +1,55 @@
 <div class="professor">
-  
-  <h2>Logged in as {{ username }}</h2>
-<!-- need to display user information here -->
+
+  <h2>Logged in as <span id="userID">{{ username }}</span></h2>
+  <!-- need to display user information here -->
   <ul style="list-style-type:none;">
-  	<li>First Name: {{ firstname }}</li>
-    <li>Last Name: {{ lastname }}</li>
-    <li>Email: {{ email }}</li>
-    <li>Phone: {{ phone }}</li>
+    <li><span id="profile-info">First Name:</span> {{ firstname }}</li>
+    <li><span id="profile-info">Last Name:</span> {{ lastname }}</li>
+    <li><span id="profile-info">Email:</span> {{ email }}</li>
+    <li><span id="profile-info">Phone:</span> {{ phone }}</li>
   </ul>
-<!-- List of courses and buttons to sort -->
+  <!-- List of courses and buttons to sort -->
   <br>
   <h2>Courses List</h2>
-  <br>
   <ul class="courses_list" style="list-style-type:none;">
     {{#each course}}
-      <li>Course name: {{name}}</li>
-      <li>Max group size: {{groupSize}}</li>
+    <li><span id="profile-info">Course name:</span> {{name}}</li>
+    <li><span id="profile-info">Max group size:</span> {{groupSize}}</li>
     {{/each}}
   </ul>
   <h3>Students:</h3>
   <table class="students">
-      <tr>
-        <th>Lastname</th>
-        <th>Firstname</th>
-        <th>Course</th>
-        <th>Group Name</th>
-      </tr>
-      {{#each student}}
-      <tr>
-        <td>{{lastname}}</td> 
-        <td>{{firstname}}</td> 
-        <td>{{course}}</td> 
-        <td>{{groupname}}</td>
-      </tr>
-      {{/each}}
+    <tr>
+      <th>Lastname</th>
+      <th>Firstname</th>
+      <th>Course</th>
+      <th>Group Name</th>
+    </tr>
+    {{#each student}}
+    <tr>
+      <td>{{lastname}}</td>
+      <td>{{firstname}}</td>
+      <td>{{course}}</td>
+      <td>{{groupname}}</td>
+    </tr>
+    {{/each}}
   </table>
-  
+
   <br>
   <h2>Please enter the name of the course you want to sort groups:</h2>
   <form id='sort_form' method='POST' action='/professor'>
-  	<label for='course_name'>Course name:</label>
-    	<input type='text' name='course_name' id='course_name'>
-  	<button type='Submit' value='Sort Groups'>Sort Groups</button>
-        {{#if error}}
-          <p class='error'>{{error}}</p>
-        {{/if}}
+    <label id='course-name' for='course_name'>Course name:</label>
+    <input type='text' name='course_name' id='course_name'>
+    <button id='sort-groups' type='Submit' value='Sort Groups'>Sort Groups</button>
+    {{#if error}}
+    <p id='error'>{{error}}</p>
+    {{/if}}
   </form>
-  
-  
-  <p>Log out <a href="http://localhost:3000/logout">here.</a></p>
-  
+
+
+  <form action="/logout" method="GET" id="logout-form">
+    <label for="logout-button">
+      <input id="logout-button" type="submit" value="Logout" />
+    </label>
+  </form>
 </div>
