@@ -8,7 +8,7 @@ const saltRounds = 16;
 module.exports = {
   // **** General functions ****
   // create new user when someone registers
-  async create(username, password, firstname, lastname, email, phone, zipcode, latitude, longitude, availability) {
+  async create(username, password, firstname, lastname, email, phone, role, zipcode, latitude, longitude, availability) {
     // error check
     if(!username) throw 'Registration failed: username not provided';
 
@@ -21,6 +21,12 @@ module.exports = {
     if(!email) throw 'Registration failed: email not provided';
 
     if(!phone) throw 'Registration failed: phone not provided';
+    
+    if(!role){
+      throw 'Registration failed: role not provided';
+    } else if (role !== 'student' && role !== 'prof') {
+      throw 'Registration failed: role must be either student or professor';
+    }
 
     // Blank zip, latitude, or longitude
     if (zipcode == '' || latitude == '' || longitude == '') {
@@ -32,46 +38,49 @@ module.exports = {
     {
       availability = [];
     }
+    
+    if (role === 'student') {
+      // get users collection
+      const usersCollection = await users();
+      const userNameExists = await usersCollection.findOne({username: username});
+      // check if username exists
+      if(userNameExists)
+      {
+        throw 'Registration failed: Username already exists';
+      }
 
-    // get users collection
-    const usersCollection = await users();
-    const userNameExists = await usersCollection.findOne({username: username});
-    // check if username exists
-    if(userNameExists)
-    {
-      throw 'Registration failed: Username already exists';
+      // hash password with bcrypt
+      const hash = await bcrypt.hash(password, saltRounds);
+      const userId = uuid();
+
+
+      let newUser = {
+        _id: userId,
+        username: username,
+        hashedPassword: hash,
+        profile: {
+          id: userId,
+          firstname: firstname,
+          lastname: lastname,
+          email: email,
+          phone: phone,
+          zipcode: zipcode,
+          latitude: latitude,
+          longitude: longitude,
+          title: "student",
+          course: [],
+          availability: availability,
+          meetings: [],
+          groups: []
+        },
+        validSessionIDs: []
+      };
+
+      const insertInfo = await usersCollection.insertOne(newUser);
+      if (insertInfo.insertedCount === 0) throw "failed to add new user";
+
+      return await this.getUserById(insertInfo.insertedId);
     }
-
-    // hash password with bcrypt
-    const hash = await bcrypt.hash(password, saltRounds);
-    const userId = uuid();
-
-    let newUser = {
-      _id: userId,
-      username: username,
-      hashedPassword: hash,
-      profile: {
-        id: userId,
-        firstname: firstname,
-        lastname: lastname,
-        email: email,
-        phone: phone,
-        zipcode: zipcode,
-        latitude: latitude,
-        longitude: longitude,
-        title: "student",
-        course: [],
-        availability: availability,
-        meetings: [],
-        groups: []
-      },
-      validSessionIDs: []
-    };
-
-    const insertInfo = await usersCollection.insertOne(newUser);
-    if (insertInfo.insertedCount === 0) throw "failed to add new user";
-
-    return await this.getUserById(insertInfo.insertedId);
   },
 
   // returns a list of all users in the database
