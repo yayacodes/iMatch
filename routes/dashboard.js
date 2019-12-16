@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
             const authUserData = {
                 userID: authUser.username,
                 location: {lat: authUser.profile.latitude, lng:authUser.profile.longitude},
-                course: authUser.profile.course,
+                course: authUser.profile.course[0],
                 group: groupName
             };
 
