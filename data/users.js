@@ -408,6 +408,29 @@ module.exports = {
   },
 
   async removeSessionFromUser(sessionId) {
+    var newValidSessionIDs;
+    var updatedUser;
+    var updatedInfo;
+    const usersCollection = await users();
+    let  allUsers = await this.getUsers();
+
+    for (var i = 0; i < allUsers.length; i++) {
+      //filter validSessionIDs to remove sessID
+      newValidSessionIDs = allUsers[i].validSessionIDs.filter(function(validID){
+          let diff = validID !== sessionId;
+          return diff;
+        });
+      if (newValidSessionIDs.length !== allUsers[i].validSessionIDs.length) { //if sessID was removed in newValidSessionIDs 
+        //update validSessionIDs in the database
+        updatedUser = {
+          validSessionIDs: newValidSessionIDs
+        };
+        updatedInfo = await usersCollection.updateOne({username: allUsers[i].username}, {$set:updatedUser});
+        if (updatedInfo.modifiedCount === 0) {
+          throw "Could not remove sessionID from user document"
+        };  
+      }
+    }
 
   },
 
