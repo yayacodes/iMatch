@@ -19,7 +19,7 @@ const constructorMethod = app => {
 
   app.get("/", async (req, res) => {
     // either show static welcome page or redirect
-    //res.render('layouts/main');
+    res.render('layouts/home');
   });
 
   // This will return 404 error for all other invalid routes (URLs)
