@@ -15,26 +15,12 @@ module.exports = {
 
     const courseId = uuid();
 
-    let newCourse = {
-      _id: userId,
-      username: username,
-      hashedPassword: hash,
-      profile: {
-        id: userId,
-        firstname: firstname,
-        lastname: lastname,
-        email: email,
-        phone: phone,
-        zipcode: zipcode,
-        latitude: latitude,
-        longitude: longitude,
-        grouped: 'false',
-        title: "student",
-        course: [],
-        availability: [],
-        meetings: []
-      },
-      validSessionIDs: []
+  let newCourse = {
+		coursename: courseName,
+		courseType: courseType,
+		courseId: {
+			  _id: [uuid.v4()]
+		}
     };
 
     const insertInfo = await coursessCollection.insertOne(newCourse);
