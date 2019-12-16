@@ -5,9 +5,20 @@ const userMethods = require("../data/users.js");
 router.get('/', async (req, res) => {
     try {
         //authorize user (check if the current session id exists in any user's validSessionIDs array)
-        let authUser = await userMethods.getUserBySessionId(req.session.id);
-        
-        if (authUser !== null && typeof authUser !== 'undefined' ) {
+        let authorized = false;
+        let authUser = null;
+        let sessID = req.session.id;
+        let allUsers = await users.getUsers();
+
+        for (var i = 0; i < allUsers.length; i++) {
+          allUsers[i].validSessionIDs.forEach(function(validID){
+            if(validID == sessID){
+              authorized = true;
+              authUser = allUsers[i];
+            }
+          });
+        }
+        if (authorized) {
             const groupName = await userMethods.getUserGroupName(authUser._id);
 
             const authUserData = {
