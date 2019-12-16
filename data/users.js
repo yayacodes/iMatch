@@ -137,11 +137,8 @@ module.exports = {
   
   // return a user document with matching userName
   async getUserByUsername(userName) {
-    if (!userName) throw 'username not specified';
-    
     const usersCollection = await users();
     const oneUser = await usersCollection.findOne({ username: userName });
-    if (!oneUser) throw 'Failed to find user with that username';
     
     return oneUser;
   },

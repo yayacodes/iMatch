@@ -20,7 +20,7 @@ router.post('/', async (req,res) => {
         const inputUser = await userMethods.getUserByUsername(req.body.username);
         
         if (!inputUser) {
-            res.status(401).render('user/login', { error: "No user with that username"});
+            res.status(401).render('user/login', { error: "Error: Incorrect username and/or password, please try again"});
             return;
         }
         
@@ -38,7 +38,7 @@ router.post('/', async (req,res) => {
             return;
         }
     } catch (e) {
-        res.status(500).send();
+        res.json({error: e});
     }
 });
 module.exports = router;
