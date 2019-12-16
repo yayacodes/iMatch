@@ -111,7 +111,6 @@ async function main() {
   await users.create(user4.username, user4.password, user4.firstname, user4.lastname, user4.email, user4.phone, user4.role, user4.zipcode, user4.latitude, user4.longitude, user4.availability);
   await users.create(user5.username, user5.password, user5.firstname, user5.lastname, user5.email, user5.phone, user5.role, user5.zipcode, user5.latitude, user5.longitude, user5.availability);
   await users.create(user6.username, user6.password, user6.firstname, user6.lastname, user6.email, user6.phone, user6.role, user6.zipcode, user6.latitude, user6.longitude, user6.availability);
-  await users.create(user6.username, user6.password, user6.firstname, user6.lastname, user6.email, user6.phone, user6.role, user6.zipcode, user6.latitude, user6.longitude, user6.availability);
   await users.create(professor.username, professor.password, professor.firstname, professor.lastname, professor.email, professor.phone, professor.role, professor.zipcode, professor.latitude, professor.longitude, professor.availability);
 
   const course1 = {
