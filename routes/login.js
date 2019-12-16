@@ -28,7 +28,11 @@ router.post('/', async (req,res) => {
         
         if (verifyUser) {
             req.session.loginStatus = true;
-            res.redirect('/dashboard');
+            if (inputUser.role === 'student'){
+                res.redirect('/dashboard');
+            } else if (inputUser.role === 'professor'){
+                res.redirect('/professor');
+            }
         } else {
             res.status(401).render("user/login", { error: "Cannot verify user"});
             return;
