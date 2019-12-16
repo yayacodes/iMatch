@@ -54,20 +54,20 @@ module.exports = {
   },
 
   // updates course attributes such as groupSize
-  async updateCourse() {
+  async updateCourse(courseName, groupSize) {
      if (!id) throw "You must provide an id to search for";
 
     if (!courseName) throw "Provide an course name";
 
-    if (!animalType || !Array.isArray(courseType))
+    if (!groupSize || !Array.isArray(groupSize))
       throw "You must provide an array of courseType";
 
-    if (courseType.length === 0) throw "You must provide at least one course.";
+    if (courseName.length === 0) throw "You must provide at least one course.";
 
     const coursesCollection = await courses();
     const updatedCourse = {
-      courseName: name,
-      courseType: courseType
+      name: courseName,
+      groupSize: groupSize
     };
 
     const updateInfo = await courseCollection.replaceOne({ _id: id }, updatedCourse);
@@ -75,7 +75,7 @@ module.exports = {
       throw "could not update course successfully";
     }
 
-    return await this.getUserById(id);
+    return await this.getCourseById(id);
 },
 
   // adds a group to course, called via algorithm that matches students
