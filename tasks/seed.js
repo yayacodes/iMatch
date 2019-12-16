@@ -90,13 +90,13 @@ async function main() {
       longitude: "-74.0270745",
       availability: ['Tuesday', 'Thursday', 'Friday']
   } 
-   
+
   await users.create(user1.username, user1.password, user1.firstname, user1.lastname, user1.email, user1.phone, user1.role, user1.zipcode, user1.latitude, user1.longitude, user1.availability);
-  await users.create(user2.username, user2.password, user2.firstname, user2.lastname, user2.email, user2.phone, user2.role,user2.zipcode, user2.latitude, user2.longitude, user2.availability);
-  await users.create(user3.username, user3.password, user3.firstname, user3.lastname, user3.email, user3.phone, user3.role,user3.zipcode, user3.latitude, user3.longitude, user3.availability);
-  await users.create(user4.username, user4.password, user4.firstname, user4.lastname, user4.email, user4.phone, user4.role,user4.zipcode, user4.latitude, user4.longitude, user4.availability);
-  await users.create(user5.username, user5.password, user5.firstname, user5.lastname, user5.email, user5.phone, user5.role,user5.zipcode, user5.latitude, user5.longitude, user5.availability);
-  await users.create(user6.username, user6.password, user6.firstname, user6.lastname, user6.email, user6.phone, user6.role,user6.zipcode, user6.latitude, user6.longitude, user6.availability);
+  await users.create(user2.username, user2.password, user2.firstname, user2.lastname, user2.email, user2.phone, user2.role, user2.zipcode, user2.latitude, user2.longitude, user2.availability);
+  await users.create(user3.username, user3.password, user3.firstname, user3.lastname, user3.email, user3.phone, user3.role, user3.zipcode, user3.latitude, user3.longitude, user3.availability);
+  await users.create(user4.username, user4.password, user4.firstname, user4.lastname, user4.email, user4.phone, user4.role, user4.zipcode, user4.latitude, user4.longitude, user4.availability);
+  await users.create(user5.username, user5.password, user5.firstname, user5.lastname, user5.email, user5.phone, user5.role, user5.zipcode, user5.latitude, user5.longitude, user5.availability);
+  await users.create(user6.username, user6.password, user6.firstname, user6.lastname, user6.email, user6.phone, user6.role, user6.zipcode, user6.latitude, user6.longitude, user6.availability);
 
   const course1 = {
     name: "web programming",
