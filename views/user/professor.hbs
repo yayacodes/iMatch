@@ -16,14 +16,21 @@
     {{#each course}}
       <li>Course name: {{name}}</li>
       <li>Max group size: {{groupSize}}</li>
-      <form id='sort_form' method='POST' action='/dashboard'>
-        <button type='Submit' value='Sort Groups'>Sort Groups</button>
+    {{/each}}
+  </ul>
+  
+  <br>
+  <h2>Sort Groups:</h2>
+  <form id='sort_form' method='POST' action='/dashboard'>
+  	<label for='course_name'>Course name:</label>
+    	<input type='text' name='course_name' id='course_name'>
+  	<button type='Submit' value='Sort Groups'>Sort Groups</button>
         {{#if error}}
           <p class='error'>{{error}}</p>
         {{/if}}
-      </form>
-    {{/each}}
-  </ul>
-	<p>Log out <a href="http://localhost:3000/logout">here.</a></p>
+  </form>
+  
+  
+  <p>Log out <a href="http://localhost:3000/logout">here.</a></p>
   
 </div>
