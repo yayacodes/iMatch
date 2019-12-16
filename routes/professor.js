@@ -57,9 +57,27 @@ router.post('/', async (req, res) => {
             });
         }
         if (authorized) {
+            if (!req.body.course_name) {
+                res.status(401).render('user/professor',{ error: "Please provide the name of the course you want to sort groups"});
+                return;
+            } 
+            
             const courses = courseMethods.getCourses();
+            var chosenCourse = null;
             
+            //look for course with given course name
+            for (var i = 0; i < courses.length; i++) {
+                if (courses[i].name === req.body.course_name) {
+                    chosenCourse = courses[i]
+                }
+            }
+            if (!chosenCourse) {
+                res.status(401).render('user/professor',{ error: "No course with that name found"});
+                return;
+            } 
             
+            //call the sorting algorithm
+            await sortMethods.groupUsersByStrictAvailability(chosenCourse.groupSize);
             
         } else {
             res.render('user/login', { error: "Incorrect username and/or password. Try again" });
