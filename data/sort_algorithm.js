@@ -1,6 +1,6 @@
 const uuid = require('uuid/v4');
 const mongoCollections = require('../config/mongoCollections');
-const users = require("../data/users.js")
+const users = require("../data/users.js");
 
 // Splits an array into n elements
 function splitArray(a, n, balanced) {

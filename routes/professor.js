@@ -48,7 +48,8 @@ router.get('/', async (req, res) => {
               email: authUser.profile.email,
               phone: authUser.profile.phone,
               course: courses,
-              student: studentsList});
+              student: studentsList
+          });
             
         } else {
             res.render('user/login', { error: "Incorrect username and/or password. Try again" });
@@ -82,6 +83,7 @@ router.post('/', async (req, res) => {
             } 
             
             const courses = await courseMethods.getCourses();
+
             var chosenCourse = null;
             
             //look for course with given course name

@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
         let authorized = false;
         let authUser = null;
         let sessID = req.session.id;
-        let allUsers = await users.getUsers();
+        let allUsers = await userMethods.getUsers();
 
         for (var i = 0; i < allUsers.length; i++) {
           allUsers[i].validSessionIDs.forEach(function(validID){
@@ -18,13 +18,14 @@ router.get('/', async (req, res) => {
             }
           });
         }
-        if (authorized) {
+        if (authUser !== null && typeof authUser !== 'undefined' ) {
             const groupName = await userMethods.getUserGroupName(authUser._id);
+            const coursename = await userMethods.getUserCourse(authUser._id);
 
             const authUserData = {
                 userID: authUser.username,
                 location: {lat: authUser.profile.latitude, lng:authUser.profile.longitude},
-                course: authUser.profile.course[0],
+                course: coursename,
                 group: groupName
             };
 

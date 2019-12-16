@@ -165,6 +165,7 @@ module.exports = {
 
   // returns the name of a user's group
   async getUserGroupName(id) {
+
       if(!id) throw 'id not specified';
 
       const user = await this.getUserById(id);
