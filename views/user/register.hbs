@@ -26,7 +26,8 @@
             </label>
             <br>
             <label for="role"> Role:
-                <input id="role" type="text" name="role" />
+                <input id="role" type="radio" value="student" name="role"/>Student
+                <input id="role" type="radio" value="professor" name="role"/>Professor
             </label>
             <br>
             <label for="zipcode"> Zip Code:
@@ -66,5 +67,6 @@
                 <input id = "register-button" type ="submit" value ="Register" />
             </label>
         </form>
+        <p>Upon successful registration, you will be redirected to the login page where you will login with your new username and password!</p>
         <p id ="error">{{error}}</p>
 </div>

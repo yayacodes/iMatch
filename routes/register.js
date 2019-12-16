@@ -19,18 +19,18 @@ router.post('/signup', async (req, res) => {
     try {
         let addUser = await userData.create(requestData.username, 
             requestData.password, requestData.firstname, 
-            requestData.lastname, requestData.email, requestData.phone, 
+            requestData.lastname, requestData.email, requestData.phone, requestData.role,
             requestData.zipcode, requestData.latitude, requestData.longitude,
             requestData.availability, requestData.course);
 
-        if (addUser != null) {
-            res.redirect('/profile'); //upon successfull add, we redirect the user to their newly created profile.
-        }
-        else {
+        if (!addUser) {
             res.render('user/register', { error: "There was an error in your registration, please try again" });
         }
+        else {
+            res.redirect('/login'); //upon successfull add, we redirect the user to the login page where they will login with their username and password
+        }
     } catch (e) {
-        res.sendStatus(404).json({ error: e });
+        res.status(404).render("user/register", {error: e})
     }
 });
 
