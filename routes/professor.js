@@ -21,14 +21,6 @@ router.get('/', async (req, res) => {
         }
         if (authorized) {
             const courses = courseMethods.getCourses();
-            
-          
-//             const authUserData = {
-//                 userID: authUser.username,
-//                 location: {lat: authUser.profile.latitude, lng:authUser.profile.longitude},
-//                 course: authUser.profile.course[0],
-//                 group: groupName
-//             };
 
             res.render('user/professor', {
               username: authUser.username, 
@@ -36,10 +28,8 @@ router.get('/', async (req, res) => {
               lastname: authUser.profile.lastname,
               email: authUser.profile.email,
               phone: authUser.profile.phone,
-              course: courses,
-              
+              course: courses});
             
-            });
         } else {
             res.render('user/login', { error: "Incorrect username and/or password. Try again" });
         }
