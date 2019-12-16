@@ -14,7 +14,8 @@
   <br>
   <ul class="courses_list">
     {{#each course}}
-      <li>{{name}}</li>
+      <li>Course name: {{name}}</li>
+      <li>Max group size: {{groupSize}}</li>
       <form id='sort_form' method='POST' action='/dashboard'>
         <button type='Submit' value='Sort Groups'>Sort Groups</button>
         {{#if error}}
