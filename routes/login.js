@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req,res) => {
-    if (!req.body.username || !req.body.password) {
+    if (!req.body.username && !req.body.password) {
         res.status(401).render('user/login',{ error: "Please provide both a valid username and a valid password"});
         return;
     }
@@ -20,7 +20,7 @@ router.post('/', async (req,res) => {
         const inputUser = await userMethods.getUserByUsername(req.body.username);
         
         if (!inputUser) {
-            res.status(401).render('user/login', { error: "No user with that username"});
+            res.status(401).render('user/login', { error: "Error: Incorrect username and/or password"});
             return;
         }
         
@@ -38,7 +38,7 @@ router.post('/', async (req,res) => {
             return;
         }
     } catch (e) {
-        res.status(500).send();
+        res.status(500).render("user/login", {error: e})
     }
 });
 module.exports = router;
