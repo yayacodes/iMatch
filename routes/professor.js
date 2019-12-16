@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
                 }
             });
         }
-        if (authorized) {
+        if (authorized && authUser.role === 'professor') {
             const courses = await courseMethods.getCourses();
             const studentUsers = await userMethods.getStudentUsers();
 
@@ -51,6 +51,8 @@ router.get('/', async (req, res) => {
               student: studentsList
           });
             
+        } else if (authorized && authUser.role === 'student') {
+            res.redirect('/dashboard');
         } else {
             res.render('user/login', { error: "Incorrect username and/or password. Try again" });
         }
