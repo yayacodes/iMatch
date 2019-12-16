@@ -435,7 +435,13 @@ module.exports = {
   },
 
   async getUserBySessionId(sessionId) {
+    const usersCollection = await users();
+      
+    // findOne() takes object representing query to perform
+    const oneUser = await usersCollection.findOne({validSessionIDs: {$in :[sessionId]}});
+    if (!oneUser) throw `failed to find user with session Id: ${sessionId}`;
 
+    return oneUser;
   },
 
   // **** Sorting functions ****
