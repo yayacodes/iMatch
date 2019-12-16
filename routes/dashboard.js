@@ -19,9 +19,13 @@ router.get('/', async (req, res) => {
             });
         }
         if (authorized) {
+            const groupName = await userMethods.getUserGroupName(authUser._id);
+
             const authUserData = {
                 userID: authUser.username,
                 location: {lat: authUser.profile.latitude, lng:authUser.profile.longitude},
+                course: authUser.profile.course,
+                group: groupName
             };
 
             res.render('user/dashboard', {userData: authUserData});

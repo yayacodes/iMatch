@@ -5,7 +5,9 @@
         <!-- Displays meeting location -->
         <!-- Hidden location data for map -->
         <div><p id="location" hidden>{{userData.location.lat}} {{userData.location.lng}}</p></div>
-        <p>// TODO: group and meeting information </p>
+        <div><p id="course"> Course: {{userData.course}}</p></div>
+        <div><p id="group"> Group: {{userData.group}}</p></div>
+        
         <!-- Map currently shows user's location -->
         <h3>Meeting location:</h3>
         <div id="gmap"></div>

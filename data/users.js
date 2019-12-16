@@ -60,7 +60,7 @@ module.exports = {
         latitude: latitude,
         longitude: longitude,
         title: "student",
-        course: [],
+        course: "Web Programming",
         availability: availability,
         meetings: [],
         groups: []
@@ -127,6 +127,19 @@ module.exports = {
     const ungroupedUsers = await usersCollection.find({"profile.groups": { $exists: true, $size: 0 }}).toArray();
 
     return ungroupedUsers;
+  },
+
+  // returns the name of a user's group
+  async getUserGroupName(id) {
+      if(!id) throw 'id not specified';
+
+      const user = await this.getUserById(id);
+      let userGroup = user.profile.groups[0];
+
+      if(!userGroup) throw 'unable to access user group';
+
+      return userGroup.groupname;
+
   },
 
   // returns an array of users by availability (day-of-the-week)
