@@ -170,7 +170,7 @@ module.exports = {
       const user = await this.getUserById(id);
       let userGroup = user.profile.groups[0];
 
-      if(!userGroup) throw 'unable to access user group';
+      if(!userGroup) userGroup = { groupname: "none"};
 
       return userGroup.groupname;
 
