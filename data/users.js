@@ -216,6 +216,40 @@ module.exports = {
     return usersByAvailability;
   },
 
+  // returns an array of group member's locations
+  async getGroupLocations(id) {
+    if(!id) throw 'user id not specified';
+
+    const user = await this.getUserById(id);
+    const groupInfo = user.profile.groups;
+
+    if(groupInfo.length == 0 || !groupInfo)
+    {
+      return [];
+    }
+
+    const groupID = groupInfo[0]._id;
+
+    const usersCollection = await users();
+    const groupMembers = await usersCollection.find({"role": "student", "profile.groups": {$elemMatch: {"_id": {$eq: groupID}}}}).toArray();
+    
+    if(!groupMembers)
+    {
+      return [];
+    }
+
+    let locations = [];
+    for(i = 0; i < groupMembers.length; i++)
+    {
+        let member = groupMembers[i];
+        let loc = {lat: member.profile.latitude, lng: member.profile.longitude};
+        locations.push(loc);
+    }
+
+    return locations;
+
+  },
+
   // returns an array of users by complete course list
   async getUsersByCourse(courseArray) {
     if(!courseArray) throw 'courses not specified';

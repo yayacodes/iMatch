@@ -79,7 +79,7 @@ module.exports = {
             let groupObj = 
             {
               _id: groupID,
-              groupname: groupName,
+              groupname: groupName
             };
 
             groupCounter++;
@@ -116,7 +116,7 @@ module.exports = {
                 let groupObj = 
                 {
                   _id: groupID,
-                  groupname: groupName,
+                  groupname: groupName
                 };
 
                 groupCounter++;
@@ -127,6 +127,7 @@ module.exports = {
                 for(m = 0; m < usrArray.length; m++)
                 {
                   let user = usrArray[m];
+
                   let updatedUser = await users.updateUserGroup(user._id, groupObj);
 
                   if(!updatedUser) 

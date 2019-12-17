@@ -4,11 +4,23 @@
         
         <!-- Displays meeting location -->
         <!-- Hidden location data for map -->
-        <div><p id="location" hidden>{{userData.location.lat}} {{userData.location.lng}}</p></div>
+        <div>
+            <p id="location" hidden>{{userData.location.lat}} {{userData.location.lng}}</p<
+        </div>
+
+        <div hidden>
+            <ul class="groupLocations_list" style="list-style-type:none;" hidden>
+                {{#each userData.memberLocation}}
+                  <li class="coordinate" hidden>{{lat}} {{lng}}</li>
+                {{/each}}
+            </ul>
+        </div>
+
+
         <div><p id="course"> Course: {{userData.course}}</p></div>
         <div><p id="group"> Group: {{userData.group}}</p></div>
         
-        <h3>Meeting location:</h3>
+        <h3>Suggested Meeting locations:</h3>
         <div id="gmap"></div>
     {{/if}}
     
