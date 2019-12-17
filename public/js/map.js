@@ -31,16 +31,17 @@ function initMap(){
 
         // Set up the map
         if(gmap != null) {
-            map = new google.maps.Map(document.getElementById("gmap"), {
-              zoom: 8,
-              center: location
-            });
+            bounds  = new google.maps.LatLngBounds();
+            map = new google.maps.Map(document.getElementById("gmap"), {});
 
             if(grouplocs.length == 0) {
                 // Add a marker to the location on the map
                 marker = new google.maps.Marker({
                     position: location
                 });
+
+                let l = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
+                bounds.extend(l);
 
                 marker.setMap(map);
             }
@@ -51,9 +52,15 @@ function initMap(){
                         position: pos
                     });
 
+                    let l = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
+                    bounds.extend(l);
+
                     marker.setMap(map);
                 }
             }
+
+            map.fitBounds(bounds);
+            map.panToBounds(bounds);
 
             return map;
         }
