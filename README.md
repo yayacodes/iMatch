@@ -47,3 +47,8 @@ The iMatch sserver will start and display a log of all http requests executed in
 
 iMatch can be viewd in your favorite browser while the iMatch Web server is running by
 navigating to http://localhost:3000/
+
+## iMatch Code Repository
+The imatch code repository is hosted on GitHub:
+
+https://github.com/yayacodes/iMatch
