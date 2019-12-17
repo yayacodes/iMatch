@@ -21,6 +21,7 @@ router.get('/', async (req, res) => {
         if (authorized && authUser.role === 'student') {
             const groupName = await userMethods.getUserGroupName(authUser._id);
             const coursename = await userMethods.getUserCourse(authUser._id);
+            const groupmembers = await userMethods.getGroupMembers(authUser._id);
             const locations = await userMethods.getGroupLocations(authUser._id);
 
             const authUserData = {
@@ -28,7 +29,9 @@ router.get('/', async (req, res) => {
                 location: {lat: authUser.profile.latitude, lng:authUser.profile.longitude},
                 course: coursename,
                 group: groupName,
-                memberLocation: locations
+                meeting: authUser.profile.availability,
+                memberLocation: locations,
+                groupMember: groupmembers
             };
 
             res.render('user/dashboard', {userData: authUserData});

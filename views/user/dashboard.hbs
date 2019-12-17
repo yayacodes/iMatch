@@ -21,6 +21,33 @@
         <p id="group"> <span id="dash-info">Group:</span> {{userData.group}}</p>
     </div>
 
+    <div>
+        <p id="meetings"> <span id="dash-info">Metting Days:</span></p>
+        <ul class="meetings" style="list-style-type:none;">
+            {{#each userData.meeting}}
+              <li>{{this}}</li>
+            {{/each}}
+        </ul>
+    </div>
+
+    <div>
+        <p id="groupMembers"> <span id="dash-info">Group Members:</span></p>
+          <table class="groupMembers">
+            <tr>
+              <th>Lastname</th>
+              <th>Firstname</th>
+              <th>Email</th>
+            </tr>
+            {{#each userData.groupMember}}
+            <tr>
+              <td>{{profile.lastname}}</td>
+              <td>{{profile.firstname}}</td>
+              <td>{{profile.email}}</td>
+            </tr>
+            {{/each}}
+          </table>
+    </div>
+
     <h3>Group Member Locations:</h3>
     <div id="gmap"></div>
     {{/if}}

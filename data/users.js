@@ -250,6 +250,31 @@ module.exports = {
 
   },
 
+  // returns an array of group members
+  async getGroupMembers(id) {
+      if(!id) throw 'user id not specified';
+
+    const user = await this.getUserById(id);
+    const groupInfo = user.profile.groups;
+
+    if(groupInfo.length == 0 || !groupInfo)
+    {
+      return [];
+    }
+
+    const groupID = groupInfo[0]._id;
+
+    const usersCollection = await users();
+    const groupMembers = await usersCollection.find({"role": "student", "profile.groups": {$elemMatch: {"_id": {$eq: groupID}}}}).toArray();
+    
+    if(!groupMembers)
+    {
+      return [];
+    }
+
+    return groupMembers;
+  },
+
   // returns an array of users by complete course list
   async getUsersByCourse(courseArray) {
     if(!courseArray) throw 'courses not specified';
