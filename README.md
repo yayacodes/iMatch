@@ -18,3 +18,32 @@ Google Maps API used to triangulate a convenient meeting place
 
 Support for multiple group projects per student and course
 Support for the application to suggest meeting places based on a type filter (e.g. suggest only libraries or only locations that have x feature)
+
+## iMatch Installation
+In the command shell, navigate to the directory where iMatch is located
+run the following:
+
+        npm install
+
+iMatch and all it's dependencies should install.
+
+## Seeding the iMatch Sample Database
+In the command shell, navigate to the directory where iMatch is located
+run the following:
+
+        npm run seed
+
+The iMatch sample database will be populated with sample users. The command shell will output: "Done seeding database"
+
+## Starting the iMatch Web Server
+In order to view the features of iMatch, you must start the web server.
+
+In the command shell, navigate to the directory where iMatch is located
+run the following:
+
+        npm start
+
+The iMatch sserver will start and display a log of all http requests executed in the browser.
+
+iMatch can be viewd in your favorite browser while the iMatch Web server is running by
+navigating to http://localhost:3000/
