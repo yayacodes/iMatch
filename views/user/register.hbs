@@ -1,5 +1,5 @@
 <div class="form-container">
-        <h2>Register!</h2>
+        <h2 id="register-title">Create Your Profile!</h2>
         <!-- Simple form that will send a POST request to /dashboard page if user successfully logs in-->
         <form action="/register/signup" method="post" id="register-form">
             <label for="username"> UserName:
@@ -67,6 +67,6 @@
                 <input id = "register-button" type ="submit" value ="Register" />
             </label>
         </form>
-        <p>Upon successful registration, you will be redirected to the login page where you will login with your new username and password!</p>
+        <p id ="instruction">Upon successful registration, you will be redirected to the login page where you will login with your new username and password!</p>
         <p id ="error">{{error}}</p>
 </div>

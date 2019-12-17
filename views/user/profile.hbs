@@ -1,17 +1,27 @@
 <div class="profile-info">
-  
-  <h2>Logged in as {{ username }}</h2>
-<!-- need to display user information here -->
-  <ul style="list-style-type:none;">
-  	<li>First Name: {{ firstname }}</li>
-    <li>Last Name: {{ lastname }}</li>
-    <li>Email: {{ email }}</li>
-    <li>Phone: {{ phone }}</li>
-    <li>Zipcode: {{ zipcode }}</li>
-  </ul>
-<!-- need add courses, avaialbility and meetings -->
 
-	<p>View dashboard <a href="http://localhost:3000/dashboard">here.</a></p>
-	<p>Edit profile <a href="http://localhost:3000/profile/edit-profile">here.</a></p>
-	<p>Log out <a href="http://localhost:3000/logout">here.</a></p>
+  <h2>Logged in as <span id="userID">{{ username }}</span></h2>
+  <!-- need to display user information here -->
+  <ul style="list-style-type:none;">
+    <li><span id="profile-info">First Name:</span> {{ firstname }}</li>
+    <li><span id="profile-info">Last Name:</span> {{ lastname }}</li>
+    <li><span id="profile-info">Email:</span> {{ email }}</li>
+    <li><span id="profile-info">Phone:</span> {{ phone }}</li>
+    <li><span id="profile-info">Zipcode:</span> {{ zipcode }}</li>
+  </ul>
+  <!-- need add courses, avaialbility and meetings -->
+
+  <p>Edit profile <a href="http://localhost:3000/profile/edit-profile">here.</a></p>
+
+  <form action="/dashboard" method="GET" id="dashboard-form">
+    <label for="dashboard-button">
+      <input id="dashboard-button" type="submit" value="Dashboard" />
+    </label>
+  </form>
+
+  <form action="/logout" method="GET" id="logout-form">
+    <label for="logout-button">
+      <input id="logout-button" type="submit" value="Logout" />
+    </label>
+  </form>
 </div>

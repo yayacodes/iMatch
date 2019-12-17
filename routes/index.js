@@ -18,7 +18,6 @@ const constructorMethod = app => {
   app.use("/professor", profRoutes);
 
   app.get("/", async (req, res) => {
-    // either show static welcome page or redirect
     res.render('layouts/home');
   });
 
